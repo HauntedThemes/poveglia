@@ -1,0 +1,55 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- Everything inside the #author tags pulls data from the author --}}
+{{#author}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="author">
+                    {{#if profile_image}}
+                    <figure class="author-image">
+                        <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image}}" alt="{{name}}"></a>
+                    </figure>
+                    {{else}}
+                        <a class="no-image" href="{{url}}" title="{{name}}"><i class="fas fa-user"></i></a>
+                    {{/if}}
+                    <div class="author-content">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h1><a href="{{url}}">{{name}}</a></h1>
+                                <p>
+                                {{#if bio}}
+                                    {{bio}}
+                                {{else}}
+                                    <a href="{{url}}">more posts</a> by this author.
+                                {{/if}}
+                                {{#if location}} - {{location}}{{/if}}
+                                </p>
+                            </div>
+                            <div class="col-sm-4">
+                                <ul class="share">
+                                    {{#if website}}<li><a href="{{website}}" target="_blank" rel="noopener noreferrer" title="{{website}}" data-toggle="tooltip" data-placement="top" title="{{website}}"><i class="fa fa-link" aria-hidden="true"></i></a></li>{{/if}}
+                                    {{#if twitter}}<li><a href="{{twitter_url}}" class="twitter" title="{{twitter}}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{twitter}}"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>{{/if}}
+                                    {{#if facebook}}<li><a href="{{facebook_url}}" class="facebook" title="{{facebook}}" target="_blank" data-toggle="tooltip" data-placement="top" title="{{facebook}}"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>{{/if}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{{/author}}
+
+{{!-- The main content area --}}
+<main id="content" class="container" role="main">
+    <div class="row loop">
+        {{#foreach posts}}
+            <div class="col-md-6 col-lg-4 item">
+                {{> "loop"}}
+            </div>
+        {{/foreach}}
+    </div>
+</main>
+{{pagination}}

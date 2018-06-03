@@ -1,0 +1,39 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- Everything inside the #post tags pulls data from the post --}}
+{{#post}}
+
+<main id="content" role="main" data-id={{comment_id}}>
+    <article class="{{post_class}}">
+        <div class="content-inner">
+            <div class="container">
+                <div class="row">   
+                    <div class="col-xl-12 ml-auto mr-auto">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-12">
+                                <div class="post-meta">
+                                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+                                    <div class="tags">{{tags}}</div>
+                                </div>
+                                <h1 class="post-title">{{title}}</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-md-12">
+                                {{#if feature_image}}
+                                    <div class="img-holder">
+                                        <div class="featured-image" title="{{title}}" style="background-image: url({{img_url feature_image}});"></div>
+                                    </div>
+                                {{/if}}
+                                <div class="editor-content">{{content}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+
+{{/post}}

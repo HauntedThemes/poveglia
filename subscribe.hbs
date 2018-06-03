@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    {{> theme_head}}
+
+    {{!-- Ghost outputs important style and meta data with this tag --}}
+    {{ghost_head}}
+    
+</head>
+<body class="subscribe">
+
+    {{> theme_header}}
+
+    <div class="main-container">
+        <main id="content" role="main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12 mr-auto ml-auto">
+                        <article class="{{post_class}}">
+                            <h1 class="post-title">
+                                {{^if success}}
+                                    Subscribe to {{@blog.title}}
+                                {{else}}
+                                    Subscribed!
+                                {{/if}}
+                            </h1>
+                            <section class="post-content">
+                                {{^if success}}
+                                    {{subscribe_form
+                                        form_class="gh-signin"
+                                        input_class="gh-input"
+                                        placeholder="Your email address"
+                                    }}
+                                {{else}}
+                                    <p>
+                                        You've successfully subscribed to <em>{{@blog.title}}</em>
+                                        with the email address <em>{{email}}</em>.
+                                    </p>
+                                {{/if}}
+                            </section>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    {{> theme_footer}}
+
+    {{!-- 3rd party scripts --}}
+    <script type="text/javascript" src="{{asset "js/libraries.js"}}"></script>
+
+    {{!-- Ghost outputs important scripts and data with this tag --}}
+    {{ghost_foot}}
+    
+    {{!-- The main JavaScript file for Joelma --}}
+    {{#if pagination.pages}}
+    <script>
+        var maxPages = parseInt('{{pagination.pages}}');
+    </script>
+    {{/if}}
+    <script type="text/javascript" src="{{asset "js/main.js"}}"></script>
+
+</body>
+</html>

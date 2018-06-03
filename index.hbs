@@ -1,0 +1,23 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- The main content area --}}
+<main id="content" class="container" role="main">
+	<div class="row loop {{^is "paged"}}{{#get "posts" include="tags, author" filter="featured:true"}}count-{{posts.length}} {{/get}}{{/is}}">
+		{{^is "paged"}}
+			{{#get "posts" include="tags, author" filter="featured:true"}}
+				{{#foreach posts}}
+					<div class="col-md-6 item post-featured">
+						{{> "loop"}}
+					</div>
+			    {{/foreach}}
+			{{/get}}
+		{{/is}}
+		{{#foreach posts}}
+			<div class="col-md-6 col-lg-4 item">
+				{{> "loop"}}
+			</div>
+		{{/foreach}}
+    </div>
+</main>
+{{pagination}}

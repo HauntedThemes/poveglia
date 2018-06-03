@@ -1,0 +1,33 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{#tag}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <section class="tag">
+                    <h1 class="post-title">{{name}}</h1>
+                    <p>
+                        {{#if description}}
+                            {{description}}
+                        {{else}}
+                            A collection of {{plural ../pagination.total empty='posts' singular='% post' plural='% posts'}}
+                        {{/if}}
+                    </p>
+                </section>
+            </div>
+        </div>
+    </div>
+{{/tag}}
+
+{{!-- The main content area --}}
+<main id="content" class="container" role="main">
+    <div class="row loop">
+        {{#foreach posts}}
+            <div class="col-md-6 col-lg-4 item">
+                {{> "loop"}}
+            </div>
+        {{/foreach}}
+    </div>
+</main>
+{{pagination}}
