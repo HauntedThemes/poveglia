@@ -117,7 +117,7 @@ td, th{ padding: 0; }
 }
 
 body{
-    font-family: "work-sans", "Ubuntu", sans-serif;
+    font-family: "Work Sans", sans-serif;
     font-weight: 300;
     color: #3f3f3f;
     background: #fff;
@@ -142,7 +142,7 @@ a{
 }
 
 a:hover{
-    color: #3f3f3f;
+    color: #0069FF;
     text-decoration: none;
 }
 
@@ -206,6 +206,10 @@ input, textarea{
     outline: 0;
     border-radius: 5px;
     border: 3px solid #eff0f1;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 figure{
@@ -241,10 +245,6 @@ blockquote p:last-child{
     position: relative;
     z-index: 2;
     opacity: 1;
-}
-
-.btn:hover{
-    color: #3f3f3f;
 }
 
 .btn.focus, .btn:focus{
@@ -340,6 +340,16 @@ header{
     max-height: 40px;
 }
 
+header .blog-logo{
+    height: 100%;
+    display: flex;
+}
+
+header .blog-logo a{
+    display: flex;
+    align-items: center;
+}
+
 header .blog-logo img{
     max-width: 255px;
     max-height: 100px;
@@ -351,16 +361,16 @@ header .blog-logo img{
     transition: all 0.3s ease-in-out;
 }
 
-header a{
-    color: #3f3f3f;
-}
-
 header a svg path{
     fill: #3f3f3f;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+}
+
+header a:hover svg path{
+    fill: #0069FF;
 }
 
 header nav ul{
@@ -604,6 +614,10 @@ header .counter.shake{
     align-items: center;
 }
 
+.modal .close:hover{
+    color: #0069FF;
+}
+
 .modal h3{
     margin: 30px 0;
     padding: 0;
@@ -743,7 +757,6 @@ header .counter.shake{
 
 .main-container{
     margin-top: 165px;
-    overflow: hidden;
 }
 
 .tags{
@@ -835,23 +848,21 @@ header .counter.shake{
     margin-bottom: 30px;
 }
 
-.loop .post-featured:nth-child(2n+1) .excerpt span,
-.loop .post-featured:nth-child(2n+1) + div .excerpt span{
-    font-size: 22px;
-}
-
-.loop .post-featured:nth-child(2n+1) .img-holder a:before,
-.loop .post-featured:nth-child(2n+1) .excerpt:before{
-    padding-bottom: 66.66%;
-}
-
-.loop .post-featured:nth-child(2n+1) + div{
+.loop .item.first,
+.loop .item.first + .item{
     flex: 0 0 50%;
     max-width: 50%;
 }
 
-.loop .post-featured:nth-child(2n+1) + div .img-holder a:before,
-.loop .post-featured:nth-child(2n+1) + div .excerpt:before{
+.loop .item.first .excerpt span,
+.loop .item.first + .item .excerpt span{
+    font-size: 22px;
+}
+
+.loop .item.first .img-holder a:before,
+.loop .item.first .excerpt:before,
+.loop .item.first + .item .img-holder a:before,
+.loop .item.first + .item .excerpt:before{
     padding-bottom: 66.66%;
 }
 
@@ -870,6 +881,15 @@ time + .tags{
     font-size: 14px;
     padding-left: 20px;
     position: relative;
+    border-bottom: 1px solid transparent;
+}
+
+time + .tags a{
+    border-bottom: 1px solid transparent;
+}
+
+time + .tags a:hover{
+    border-bottom: 1px solid #007bff;
 }
 
 time + .tags:before{
@@ -900,7 +920,6 @@ time + .tags:before{
 
 .loop .post:hover .excerpt{
     background: #eff0f1;
-    color: #3f3f3f;
 }
 
 .post .excerpt span{
@@ -933,8 +952,11 @@ time + .tags:before{
     padding-bottom: 75%;
 }
 
+.post .inner-featured-image{
+    margin-bottom: 30px;
+}
+
 .loop .post:hover .img-holder .featured-image{
-    filter: brightness(1.05);
     transform: scale(1.1, 1.1);
 }
 
@@ -1000,7 +1022,11 @@ time + .tags:before{
 }
 
 .editor-content a{
-    text-decoration: underline;
+    border-bottom: 1px solid #3f3f3f;
+}
+
+.editor-content a:hover{
+    border-bottom: 1px solid #007bff;
 }
 
 .editor-content iframe{
@@ -1129,7 +1155,7 @@ time + .tags:before{
 
 .tooltip{
     font-weight: 300;
-    font-family: "work-sans", "Ubuntu", sans-serif;
+    font-family: "Work Sans", sans-serif;
     margin-left: 5px;
     border-radius: 3px;
 }
@@ -1426,6 +1452,14 @@ time + .tags:before{
     margin-top: 4px;
 }
 
+.post-footer .tags a{
+    border-bottom: 1px solid transparent;
+}
+
+.post-footer .tags a:hover{
+    border-bottom: 1px solid #000;
+}
+
 .share-post-footer{
     font-size: 14px;
     display: flex;
@@ -1613,13 +1647,21 @@ time + .tags:before{
     padding: 15px 30px;
     font-size: 16px;
     font-weight: normal;
-    font-family: "work-sans", "Ubuntu", sans-serif;
+    font-family: "Work Sans", sans-serif;
     background: #ffffff;
     border-radius: 0 3px 3px 0;
-    color: black;
+    color: #3f3f3f;
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.gh-signin button[type="submit"]:hover{
+    color: #0069FF;
 }
 
 .subscribe .main-container{
@@ -2190,8 +2232,9 @@ footer input[type="email"]{
         padding: 10px 20px;
         font-size: 18px;
     }
-    .loop .post-featured:nth-child(2n+1) .excerpt span, .loop .post-featured:nth-child(2n+1) + div .excerpt span {
-        font-size: 20px;
+    .loop .item.first .excerpt span,
+    .loop .item.first + .item .excerpt span{
+        font-size: 21px;
     }
     .sidebar .widget-share .share a{
         width: 50px;
@@ -2210,7 +2253,8 @@ footer input[type="email"]{
 }
 
 @media (max-width: 991px) {
-    .loop .post-featured:nth-child(2n+1) .excerpt span, .loop .post-featured:nth-child(2n+1) + div .excerpt span,
+    .loop .item.first .excerpt span,
+    .loop .item.first + .item .excerpt span,
     .post .excerpt span{
         font-size: 14px;
         height: calc(100% - 70px);
@@ -2247,8 +2291,10 @@ footer input[type="email"]{
     .related-posts .loop .item:nth-child(3){
         display: none;
     }
-    .loop .post-featured:nth-child(2n+1) + div .img-holder a:before, .loop .post-featured:nth-child(2n+1) + div .excerpt:before,
-    .loop .post-featured:nth-child(2n+1) .img-holder a:before, .loop .post-featured:nth-child(2n+1) .excerpt:before {
+    .loop .item.first .img-holder a:before, 
+    .loop .item.first .excerpt:before,
+    .loop .item.first + .item .img-holder a:before, 
+    .loop .item.first + .item .excerpt:before {
         padding-bottom: 75%;
     }
     .read-later{
@@ -2259,6 +2305,10 @@ footer input[type="email"]{
 @media (max-width: 767px) {
     .sidebar .widget .loop .item:nth-last-child(-n+2) .post {
         margin-bottom: 30px;
+    }
+    input, textarea{
+        padding: 10px 20px;
+        font-size: 14px;
     }
     h1{
         font-size: 32px;
@@ -2325,12 +2375,8 @@ footer input[type="email"]{
     .main-container {
         margin-top: 100px;
     }
-    .loop .post-featured:nth-child(2n+1) + div {
-        flex: 100%;
-        max-width: 100%;
-    }
-    .loop .post-featured:nth-child(2n+1) + div .excerpt:before, 
-    .loop .post-featured:nth-child(2n+1) .excerpt:before,
+    .loop .item.first .excerpt:before,
+    .loop .item.first + .item .excerpt:before,
     .post .excerpt:before{
         padding-bottom: 200px;
     }
@@ -2349,6 +2395,11 @@ footer input[type="email"]{
     #load-posts {
         margin: 20px 0;
         font-size: 14px;
+    }
+    .loop .item.first,
+    .loop .item.first + .item{
+        flex: 0 0 100%;
+        max-width: 100%;
     }
     code{
         font-size: 14px;
@@ -2420,6 +2471,9 @@ footer input[type="email"]{
     }
     footer .share li:last-child{
         margin-right: 0;
+    }
+    .subscribe .main-container {
+        padding: 50px 0;
     }
 }
 

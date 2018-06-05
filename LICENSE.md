@@ -1,11 +1,11 @@
-Joelma - Writer Ghost Theme by Haunted Themes
+Poveglia - Multipurpose Ghost Theme by Haunted Themes
 ============================
 
 > Copyright (C) HauntedThemes SRL
 > https://www.hauntedthemes.com
 
-Joelma is a Ghost Theme created by Haunted Themes. This
-software is released under the The GNU General Public License, Version 2. Joelma
+Poveglia is a Ghost Theme created by Haunted Themes. This
+software is released under the The GNU General Public License, Version 2. Poveglia
 makes use of third party open source code from several different sources. Where
 possible, this code has been clearly labeled and associated copyright and license
 information has been included in the files themselves.  

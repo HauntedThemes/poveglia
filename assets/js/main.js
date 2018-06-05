@@ -105,13 +105,15 @@ jQuery(document).ready(function($) {
                     classes += 'excerpt';
                 };
                 if (val.tags.length) {
-                    $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                    $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
                 }else{
-                    $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                    $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
                 };
             });
 
-            $('#results [data-toggle="tooltip"]').tooltip();
+            $('#results [data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
 
             readLaterPosts = readLater($('#results'), readLaterPosts);
 
@@ -201,13 +203,15 @@ jQuery(document).ready(function($) {
                         classes += 'excerpt';
                     };
                     if (val.tags.length) {
-                        $('.bookmark-container ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ prettyDate(val.created_at) +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                        $('.bookmark-container ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ prettyDate(val.created_at) +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
                     }else{
-                        $('.bookmark-container ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ prettyDate(val.created_at) +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                        $('.bookmark-container ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ prettyDate(val.created_at) +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
                     };
                 });
 
-                $('.bookmark-container [data-toggle="tooltip"]').tooltip();
+                $('.bookmark-container [data-toggle="tooltip"]').tooltip({
+                    trigger: 'hover'
+                });
 
                 $('.bookmark-container').find('.read-later').each(function(index, el) {
                     $(this).on('click', function(event) {
@@ -269,7 +273,7 @@ jQuery(document).ready(function($) {
     // Execute on load
     $(window).on('load', function(event) {
 
-        $('.editor-content img').each(function(index, el) {
+        $('.editor-content img, .inner-featured-image').each(function(index, el) {
             if (!$(this).parent().is("a")) {
                 $( "<a href='" + $(this).attr('src') + "' class='zoom'></a>" ).insertAfter( $(this) );
                 $(this).appendTo($(this).next("a"));
@@ -352,6 +356,13 @@ jQuery(document).ready(function($) {
                             animeOpts.targets = '.item:not(.post-featured) .post[data-id="'+ id +'"]';
                             anime.remove(animeOpts.targets);
                             anime(animeOpts);
+
+                            $('[data-toggle="tooltip"]').tooltip({
+                                trigger : 'hover'
+                            });
+
+                            readLaterPosts = readLater($this, readLaterPosts);
+
                         });
                     });
                 });
@@ -416,6 +427,7 @@ jQuery(document).ready(function($) {
         title: function(){
             return $('header .progress').attr('data-original-title');
         },
+        trigger: 'hover',
         placement: 'bottom'
     });
 
@@ -462,7 +474,9 @@ jQuery(document).ready(function($) {
     }
 
     // Initialize bootstrap tootlip
-    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger : 'hover'
+    });
 
     // Validate subscribe form
     $(".gh-signin").each(function(index, el) {
