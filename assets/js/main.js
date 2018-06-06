@@ -312,11 +312,6 @@ jQuery(document).ready(function($) {
             $('#load-posts').on('click', function(event) {
                 event.preventDefault();
 
-                if (currentPage == maxPages) {
-                    $('#load-posts').addClass('hidden');
-                    return;
-                };
-
                 var $this = $(this);
 
                 // next page
@@ -369,10 +364,14 @@ jQuery(document).ready(function($) {
 
                             readLaterPosts = readLater($this, readLaterPosts);
 
+                            if (currentPage == maxPages) {
+                                $('#load-posts').addClass('finish').text('You\'ve reached the end of the list');
+                                return;
+                            };
+
                         });
                     });
                 });
-
             });
         };
 
@@ -401,7 +400,7 @@ jQuery(document).ready(function($) {
     })
 
     // Initialize Highlight.js
-    $('pre code').each(function(i, block) {
+    $('pre code, pre').each(function(i, block) {
         hljs.highlightBlock(block);
     });
 
@@ -414,6 +413,13 @@ jQuery(document).ready(function($) {
     if ($('.post-template').length) {
         progressBar();
     };
+
+    $('.go-up').on('click', function(event) {
+        event.preventDefault();
+        $('body,html').animate({
+            scrollTop : 0
+        }, 500);
+    });
 
     $(window).on('scroll', function(event) {
         
@@ -448,9 +454,9 @@ jQuery(document).ready(function($) {
                 width: percentage + '%'
             });
             $('.progress').parent().addClass('visible');
-            $('.progress').attr('data-original-title', parseInt(percentage) + '%');
+            $('.progress').attr('data-original-title', parseInt(percentage) + '% read');
             if ($('.progress').attr('aria-describedby')) {
-                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text(parseInt(percentage) + '%');
+                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text(parseInt(percentage) + '% read');
             };
         }else if($(window).scrollTop() < postContentOffsetTop){
             $('.progress').css({
@@ -461,9 +467,9 @@ jQuery(document).ready(function($) {
             $('.progress').css({
                 width: '100%'
             });
-            $('.progress').attr('data-original-title', '100%');
+            $('.progress').attr('data-original-title', '100% read');
             if ($('.progress').attr('aria-describedby')) {
-                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text('100%');
+                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text('100% read');
             };
         };
     }
@@ -499,9 +505,24 @@ jQuery(document).ready(function($) {
         });
     });
 
+    // Validate formspree form
+    $("form[action*='https://formspree.io/']").each(function(index, el) {
+        $(this).validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                message: {
+                    required: true,
+                },
+            }
+        });
+    });
+
     // Initialize shareSelectedText
     if (config['share-selected-text']) {
-        shareSelectedText('.post-template .post-content', {
+        shareSelectedText('.post-template .editor-content', {
             sanitize: true,
             buttons: [
                 'twitter',

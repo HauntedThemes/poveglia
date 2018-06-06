@@ -152,6 +152,13 @@ p{
     margin-bottom: 30px;
 }
 
+iframe{
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 30px;
+    max-width: 100% !important;
+}
+
 code, kbd, pre, samp {
     font-family: monospace, monospace;
     font-size: 1em;
@@ -162,8 +169,10 @@ mark{
     background: #ededed;
 }
 
-pre{
+pre,
+pre.hljs{
     padding: 30px;
+    margin: 30px 0;
 }
 
 pre .hljs{
@@ -212,6 +221,15 @@ input, textarea{
     transition: all 0.3s ease-in-out;
 }
 
+textarea{
+    height: 250px;
+}
+
+form input,
+form textarea{
+    margin-bottom: 10px;
+}
+
 figure{
     margin: 30px 0;
 }
@@ -225,10 +243,27 @@ hr{
 }
 
 blockquote{
-    background: #ededed;
-    padding: 30px;
+    padding: 30px 50px;
     margin: 30px 0;
-    font-style: italic;
+    position: relative;
+}
+
+blockquote:before{
+    content: '\f10e';
+    font-family: Font Awesome\ 5 Free;
+    font-size: 48px;
+    color: #eff0f1;
+    font-weight: bold;
+    position: absolute;
+    z-index: -1;
+    top: 0px;
+    left: 30px;
+}
+
+.editor-content blockquote p{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 32px;
 }
 
 blockquote p:last-child{
@@ -245,6 +280,11 @@ blockquote p:last-child{
     position: relative;
     z-index: 2;
     opacity: 1;
+    background: #fff;
+}
+
+.btn:hover{
+    color: #0069FF;
 }
 
 .btn.focus, .btn:focus{
@@ -496,6 +536,14 @@ header .progress{
     margin-top: 1px;
     margin-bottom: 1px;
     width: 0;
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    -o-transition: background 0.3s ease-in-out;
+    transition: background 0.3s ease-in-out;
+}
+
+header .progress:hover{
+    background: #0069FF;
 }
 
 header .progress[style="width: 100%;"]{
@@ -604,8 +652,12 @@ header .counter.shake{
     right: 30px;
     z-index: 9;
     height: 66px;
+    color: #3f3f3f;
+    width: 66px;
+    padding: 0;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .modal .close:hover{
@@ -629,7 +681,7 @@ header .counter.shake{
 .modal .modal-title{
     padding-bottom: 20px;
     border-bottom: 1px solid #f7f8f8;
-    width: calc(100% - 110px);
+    width: calc(100% - 95px);
     line-height: 1.2;
 }
 
@@ -642,7 +694,7 @@ header .counter.shake{
 }
 
 .modal .loop .inner{
-    padding: 10px;
+    padding: 10px 0;
 }
 
 .modal .loop .item:nth-last-child(-n+3) .post {
@@ -652,7 +704,7 @@ header .counter.shake{
 #search-field{
     margin: 14px 0 30px 0;
     line-height: 1.2;
-    width: calc(100% - 110px);
+    width: calc(100% - 95px);
 }
 
 .list-box{
@@ -870,6 +922,22 @@ header .counter.shake{
     position: relative;
 }
 
+.loop .post.featured .img-holder:before{
+    content: '\f005';
+    font-family: Font Awesome\ 5 Free;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    z-index: 2;
+    color: #FFCB00;
+    align-items: center;
+    justify-content: center;
+}
+
 time + .tags{
     font-size: 14px;
     padding-left: 20px;
@@ -911,7 +979,15 @@ time + .tags:before{
     overflow: hidden;
 }
 
+.post.featured .excerpt{
+    border: 3px solid #ffcb00;
+}
+
 .loop .post:hover .excerpt{
+    background: #eff0f1;
+}
+
+.loop .post.featured:hover .excerpt{
     background: #eff0f1;
 }
 
@@ -1022,12 +1098,9 @@ time + .tags:before{
     border-bottom: 1px solid #007bff;
 }
 
-.editor-content iframe{
-    margin: 0 auto;
-    display: block;
+.editor-content iframe[src*="https://www.youtube.com/"] {
     height: calc(730px / 1.77777778) !important;
     width: 100% !important;
-    margin-bottom: 30px;
 }
 
 .content-inner img{
@@ -1305,11 +1378,19 @@ time + .tags:before{
 }
 
 .sidebar .loop .inner{
-    padding: 10px 10px 0 10px;
+    padding: 10px 0 0 0;
+}
+
+.sidebar .post.featured .excerpt{
+    border: 3px solid #eff0f1;
 }
 
 .sidebar .loop .read-later{
     top: 3px;
+}
+
+.sidebar .loop .post.featured .img-holder:before{
+    display: none;
 }
 
 .sidebar .loop .post .share{
@@ -1344,6 +1425,10 @@ time + .tags:before{
     font-weight: 900;
     color: rgb(206, 206, 206);
     font-size: 32px;
+}
+
+.sidebar .author{
+    align-items: flex-start;
 }
 
 .author-template .author{
@@ -1450,7 +1535,7 @@ time + .tags:before{
 }
 
 .post-footer .tags a:hover{
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #0069FF;
 }
 
 .share-post-footer{
@@ -1495,6 +1580,11 @@ time + .tags:before{
 
 #load-posts{
     margin: 50px 0;
+}
+
+#load-posts.finish{
+    opacity: .6;
+    pointer-events: none;
 }
 
 #load-posts.visible + .pagination{
@@ -1560,7 +1650,7 @@ time + .tags:before{
     -ms-flex-align: center;
     align-items: center;
     border-radius: 50%;
-    background: #000;
+    background: #3f3f3f;
     height: 100%;
     pointer-events: none;
     position: relative;
@@ -1581,7 +1671,7 @@ time + .tags:before{
     height: 0;
     border-style: solid;
     border-width: 7px 7.5px 0;
-    border-color: #000 transparent transparent;
+    border-color: #3f3f3f transparent transparent;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
@@ -1589,7 +1679,7 @@ time + .tags:before{
 }
 
 .share-selected-text-main-container .share-selected-text-inner:hover:after{
-    border-color: #646464 transparent transparent;
+    border-color: #1da1f2 transparent transparent;
 }
 
 .share-selected-text-main-container .share-selected-text-btn {
@@ -1609,13 +1699,15 @@ time + .tags:before{
     margin: 0;
     padding: 0 20px;
     border-radius: 50%;
-    transition: .3s ease all;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     width: 50px;
 }
 
-.share-selected-text-main-container .share-selected-text-btn:focus,
 .share-selected-text-main-container .share-selected-text-btn:hover {
-    background: #646464;
+    background: #1da1f2;
 }
 
 .share-selected-text-main-container .share-selected-text-btn .icon-sst-twitter:before{
@@ -1729,6 +1821,30 @@ footer input[type="email"]{
 
 .subscribe .main-container .gh-signin button[type="submit"] {
     background: #eff0f1;
+}
+
+.go-up{
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.scroll .go-up{
+    opacity: 1;
+    pointer-events: all;
 }
 
 @-webkit-keyframes scale-shake {
@@ -2244,11 +2360,10 @@ footer input[type="email"]{
     .sidebar .widget .tags .btn{
         padding: 5px 10px;
     }
-    .editor-content iframe{
+    .editor-content iframe[src*="https://www.youtube.com/"] {
         height: calc(610px / 1.77777778) !important;
     }
     .modal .close{
-        padding: 15px 30px;
         font-size: 20px;
     }
 }
@@ -2271,7 +2386,7 @@ footer input[type="email"]{
         border: none;
         margin: 0;
     }
-    .editor-content iframe {
+    .editor-content iframe[src*="https://www.youtube.com/"] {
         height: calc(690px / 1.77777778) !important;
     }
     .sidebar .loop .post .excerpt span{
@@ -2301,11 +2416,18 @@ footer input[type="email"]{
     .read-later{
         opacity: 1;
     }
+    form[action*="https://formspree.io/"] {
+        margin-bottom: 50px;
+    }
 }
 
 @media (max-width: 767px) {
     .sidebar .widget .loop .item:nth-last-child(-n+2) .post {
         margin-bottom: 30px;
+    }
+    .btn{
+        padding: 5px 10px;
+        font-size: 14px;
     }
     input, textarea{
         padding: 10px 20px;
@@ -2341,9 +2463,9 @@ footer input[type="email"]{
         padding: 0;
     }
     .modal .close{
-        padding: 17px 11px;
         font-size: 16px;
-        height: 30px;
+        height: 40px;
+        width: 40px;
         right: 15px;
         top: 15px;
     }
@@ -2353,11 +2475,11 @@ footer input[type="email"]{
         margin-top: 40px;
     }
     header{
-        height: 85px;
+        height: 65px;
     }
     header .blog-logo img{
         max-height: 60px;
-        max-width: 200px;
+        max-width: 150px;
     }
     header .blog-logo{
         height: 100%;
@@ -2374,7 +2496,7 @@ footer input[type="email"]{
         font-size: 24px;
     }
     .main-container {
-        margin-top: 100px;
+        margin-top: 80px;
     }
     .loop .item.first .excerpt:before,
     .loop .item.first + .item .excerpt:before,
@@ -2421,7 +2543,7 @@ footer input[type="email"]{
     hr {
         margin: 30px 0;
     }
-    .editor-content iframe {
+    .editor-content iframe[src*="https://www.youtube.com/"] {
         height: calc(510px / 1.77777778) !important;
     }
     .content-inner .editor-content ul, .content-inner .editor-content ol{
@@ -2446,6 +2568,15 @@ footer input[type="email"]{
     .author p{
         font-size: 14px;
         line-height: 1.4;
+    }
+    .editor-content blockquote p{
+        font-size: 18px;
+        line-height: 26px;
+    }
+    blockquote:before{
+        top: 0px;
+        left: 5px;
+        font-size: 32px;
     }
     footer{
         margin-top: 30px;
@@ -2476,6 +2607,9 @@ footer input[type="email"]{
     .subscribe .main-container {
         padding: 50px 0;
     }
+    .go-up{
+        display: none;
+    }
 }
 
 @media (max-width: 575px) {
@@ -2496,7 +2630,7 @@ footer input[type="email"]{
         margin-top: 20px;
         justify-content: flex-start;
     }
-    .editor-content iframe {
+    .editor-content iframe[src*="https://www.youtube.com/"] {
         height: calc((100vw - 30px) / 1.77777778) !important;
     }
 }

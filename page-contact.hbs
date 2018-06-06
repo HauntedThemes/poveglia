@@ -1,0 +1,44 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- Everything inside the #post tags pulls data from the post --}}
+{{#post}}
+
+<main id="content" role="main" data-id={{comment_id}}>
+    <article class="{{post_class}}">
+        <div class="content-inner">
+            <div class="container">
+                <div class="row">   
+                    <div class="col-xl-12 ml-auto mr-auto">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-12">
+                                <div class="post-meta">
+                                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+                                </div>
+                                <h1 class="post-title">{{title}}</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-12">
+                                {{#if feature_image}}
+                                    <img src="{{img_url feature_image}}" class="inner-featured-image" alt="{{title}}">
+                                {{/if}}
+                                <div class="editor-content">{{content}}</div>
+                                <form method="POST" action="https://formspree.io/contact@hauntedthemes.com">
+                                    <input type="email" name="email" placeholder="Your email">
+                                    <textarea name="message" placeholder="Your message"></textarea>
+                                    <button type="submit" class="btn">Send</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-6 col-md-12">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d48336.84039471445!2d-74.00037442586076!3d40.78285940689652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1528323862485" width="100%" height="326" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</main>
+
+{{/post}}
