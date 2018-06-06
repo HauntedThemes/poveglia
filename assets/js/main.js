@@ -72,50 +72,56 @@ jQuery(document).ready(function($) {
         displaySearchInfo   : false,
         onComplete          : function( results ){
 
-            var url = [location.protocol, '//', location.host].join('');
+            if (results.length) {
+                var url = [location.protocol, '//', location.host].join('');
 
-            $('#results').empty();
+                $('#results').empty();
 
-            var tags = [];
-            $.each(results, function(index, val) {
-                if (val.tags.length) {
-                    if ($.inArray(val.tags[0].name, tags) === -1) {
-                        tags.push(val.tags[0].name);
+                var tags = [];
+                $.each(results, function(index, val) {
+                    if (val.tags.length) {
+                        if ($.inArray(val.tags[0].name, tags) === -1) {
+                            tags.push(val.tags[0].name);
+                        };
+                    }else{
+                        if ($.inArray('Other', tags) === -1) {
+                            tags.push('Other');
+                        };
                     };
-                }else{
-                    if ($.inArray('Other', tags) === -1) {
-                        tags.push('Other');
+                });
+                tags.sort();
+                tags = unique(tags);
+
+                $.each(tags, function(index, val) {
+                    $('#results').append('<h3>#'+ val +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
+                });
+
+                $.each(results, function(index, val) {
+                    var feature_image = '';
+                    var classes = '';
+                    if (val.feature_image) {
+                        feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                        classes += 'featured-image';
+                    }else{
+                        classes += 'excerpt';
                     };
-                };
-            });
-            tags.sort();
-            tags = unique(tags);
+                    if (val.tags.length) {
+                        $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                    }else{
+                        $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                    };
+                });
 
-            $.each(tags, function(index, val) {
-                $('#results').append('<h3>#'+ val +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
-            });
+                $('#results [data-toggle="tooltip"]').tooltip({
+                    trigger: 'hover'
+                });
 
-            $.each(results, function(index, val) {
-                var feature_image = '';
-                var classes = '';
-                if (val.feature_image) {
-                    feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
-                    classes += 'featured-image';
-                }else{
-                    classes += 'excerpt';
-                };
-                if (val.tags.length) {
-                    $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
-                }else{
-                    $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
-                };
-            });
+                readLaterPosts = readLater($('#results'), readLaterPosts);
+            }else if($('#search-field').val().length && !results.length){
+                $('#results').append('<h3>No results were found.</h3><ul class="list-box loop row"><li class="col-md-12 item">Your search - <b>'+ $('#search-field').val() +'</b> - did not match any articles.</li></ul>');
+            };
 
-            $('#results [data-toggle="tooltip"]').tooltip({
-                trigger: 'hover'
-            });
 
-            readLaterPosts = readLater($('#results'), readLaterPosts);
 
         }
     });

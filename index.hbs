@@ -3,16 +3,7 @@
 
 {{!-- The main content area --}}
 <main id="content" class="container" role="main">
-	<div class="row loop {{^is "paged"}}{{#get "posts" include="tags, author" filter="featured:true"}}count-{{posts.length}} {{/get}}{{/is}}">
-		<!-- {{^is "paged"}}
-			{{#get "posts" include="tags, author" filter="featured:true"}}
-				{{#foreach posts}}
-					<div class="col-md-6 item post-featured">
-						{{> "loop"}}
-					</div>
-			    {{/foreach}}
-			{{/get}}
-		{{/is}} -->
+	<div class="row loop">
 		{{#foreach posts}}
 			<div class="col-md-6 col-lg-4 {{#if @first}}first{{/if}} item">
 				{{> "loop"}}

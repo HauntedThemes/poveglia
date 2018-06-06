@@ -384,16 +384,15 @@ header nav ul li a{
     font-weight: normal;
     margin-left: 40px;
     color: #3f3f3f;
-    border-radius: 5px;
     font-size: 20px;
-    padding: 10px 20px;
+    margin: 10px 20px;
     font-size: 14px;
-    margin: 0 10px 0 0;
     display: inline-flex;
+    border-bottom: 1px solid transparent;
 }
 
 header nav ul li a:hover{
-    background: #eff0f1;
+    border-bottom: 1px solid #0069FF;
 }
 
 header .navigation-trigger{
@@ -458,11 +457,6 @@ header .bookmark-trigger{
     padding: 10px 10px;
     width: 41px;
     border-radius: 5px;
-}
-
-header .search-trigger:hover,
-header .bookmark-trigger:hover{
-    background: #eff0f1;
 }
 
 header .bookmark-trigger{
@@ -624,7 +618,6 @@ header .counter.shake{
 }
 
 .no-bookmarks{
-    font-size: 14px;
     text-align: center;
     margin: 50px 0;
 }
@@ -1689,6 +1682,14 @@ footer h3{
 footer .copyright{
     margin-top: 50px;
     background: #fff;
+}
+
+footer .copyright a{
+    border-bottom: 1px solid transparent;
+}
+
+footer .copyright a:hover{
+    border-bottom: 1px solid #0069FF;
 }
 
 footer .copyright p{

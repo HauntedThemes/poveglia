@@ -46,7 +46,7 @@
 <main id="content" class="container" role="main">
     <div class="row loop">
         {{#foreach posts}}
-            <div class="col-md-6 col-lg-4 item">
+            <div class="col-md-6 col-lg-4 {{#if @first}}first{{/if}} item">
                 {{> "loop"}}
             </div>
         {{/foreach}}
