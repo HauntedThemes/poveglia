@@ -321,6 +321,11 @@ jQuery(document).ready(function($) {
 
             $('#load-posts').addClass('visible').removeClass('hidden');
 
+            if (currentPage == maxPages) {
+                $('#load-posts').addClass('finish').text('You\'ve reached the end of the list');
+                return;
+            };
+
             $('#load-posts').on('click', function(event) {
                 event.preventDefault();
 
