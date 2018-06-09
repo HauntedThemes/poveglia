@@ -64,6 +64,10 @@ jQuery(document).ready(function($) {
 
     };
 
+    function getRootUrl(url) {
+      return url.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1");
+    }
+
     // Initialize ghostHunter - A Ghost blog search engine
     var searchField = $("#search-field").ghostHunter({
         results             : "#results",
@@ -100,7 +104,11 @@ jQuery(document).ready(function($) {
                     var feature_image = '';
                     var classes = '';
                     if (val.feature_image) {
-                        feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                        if (val.feature_image.substring(0, 4) == 'http') {
+                            feature_image = 'style="background-image: url('+ val.feature_image +');"';
+                        }else{
+                            feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                        };
                         classes += 'featured-image';
                     }else{
                         classes += 'excerpt';
@@ -203,7 +211,11 @@ jQuery(document).ready(function($) {
                     var feature_image = '';
                     var classes = '';
                     if (val.feature_image) {
-                        feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                        if (val.feature_image.substring(0, 4) == 'http') {
+                            feature_image = 'style="background-image: url('+ val.feature_image +');"';
+                        }else{
+                            feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                        };
                         classes += 'featured-image';
                     }else{
                         classes += 'excerpt';
