@@ -24,7 +24,7 @@
     </div>
     {{#is "post"}}
     <div class="info-bar">
-        <div class="progress"></div>
+        <div class="progress" data-read='{{t "read"}}'></div>
     </div>
     {{/is}}
 </header>
@@ -41,9 +41,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <form class="search">
-                                <input id="search-field" placeholder="Search" autocomplete="off"/>
+                                <input id="search-field" placeholder="{{t "Search"}}" autocomplete="off"/>
                             </form>
-                            <div id="results" class="loop"></div>
+                            <div id="results" class="loop" data-no-results-description='{{t "Your search did not match any articles. Try something else."}}' data-no-results='{{t "No results were found"}}' data-other='{{t "Other"}}' data-bookmark-article='{{t "Bookmark article"}}' data-remove-bookmark='{{t "Remove bookmark"}}'></div>
                         </div>
                     </div>
                 </div>
@@ -63,9 +63,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="modal-title">Bookmarks</h3>
+                            <h3 class="modal-title">{{t "Bookmarks"}}</h3>
                             <div class="bookmark-container">
-                                <p class="no-bookmarks">You haven't yet saved any bookmarks. To bookmark a post, just click <i class="far fa-bookmark"></i>.</p>
+                                <p class="no-bookmarks">{{t "You haven't yet saved any bookmarks. To bookmark a post, just click <i class='far fa-bookmark'></i>."}}</p>
                             </div>
                         </div>
                     </div>
@@ -86,24 +86,24 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3 class="modal-title">Menu</h3>
+                            <h3 class="modal-title">{{t "Menu"}}</h3>
                             <div class="modal-nav"></div>
                         </div>
                     </div>
                     <div class="row additional">
                         <div class="col-sm-12">
                             {{#if @labs.subscribers}}
-                                <h3 class="modal-title">Newsletter</h3>
+                                <h3 class="modal-title">{{t "Newsletter"}}</h3>
                                 <div class="subscribe-container">
-                                    <p>Subscribe to our newsletter to receive our latest news.</p>
+                                    <p>{{t "Subscribe to our newsletter to receive our latest news."}}</p>
                                     {{subscribe_form
                                         form_class="gh-signin"
                                         input_class="gh-input"
-                                        placeholder="Your email address"
+                                        placeholder=(t "Your email address")
                                     }}
                                 </div>
                             {{/if}}
-                            <h3 class="modal-title">Social</h3>
+                            <h3 class="modal-title">{{t "Social"}}</h3>
                             <ul class="share">
                                 {{#if @blog.facebook}}
                                     <li><a href="{{facebook_url}}" class="facebook" target="_blank" data-toggle="tooltip" data-placement="top" title="{{@blog.facebook}}"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
@@ -111,10 +111,10 @@
                                 {{#if @blog.twitter}}
                                     <li><a href="{{twitter_url}}" class="twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="{{@blog.twitter}}"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
                                 {{/if}}
-                                <li><a href="https://www.youtube.com/" class="youtube" title="Youtube" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
-                                <li><a href="https://www.instagram.com/" class="instagram" title="Instagram" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
-                                <li><a href="https://plus.google.com" class="google-plus" title="Google+" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-google-plus-g"></i></a></li>
-                                <li><a href="{{@blog.url}}/rss" target="_blank" data-toggle="tooltip" data-placement="top" title="RSS"><i class="fas fa-rss" aria-hidden="true" data-toggle="tooltip" data-placement="top"></i></a></li>
+                                <li><a href="https://www.youtube.com/" class="youtube" title="{{t "Youtube"}}" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/" class="instagram" title="{{t "Instagram"}}" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="https://plus.google.com" class="google-plus" title="{{t "Google+"}}" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-google-plus-g"></i></a></li>
+                                <li><a href="{{@blog.url}}/rss" target="_blank" data-toggle="tooltip" data-placement="top" title="{{t "RSS Feed"}}"><i class="fas fa-rss" aria-hidden="true" data-toggle="tooltip" data-placement="top"></i></a></li>
                             </ul>
                         </div>
                     </div>

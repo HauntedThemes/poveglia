@@ -1103,7 +1103,9 @@ time + .tags:before{
     width: 100% !important;
 }
 
-.content-inner img{
+.content-inner img,
+.content-inner .kg-width-full img,
+.content-inner .kg-width-wide img{
     max-width: 100%;
     height: auto;
     position: relative;
@@ -1122,7 +1124,7 @@ time + .tags:before{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.content-inner .post-content .kg-card-markdown a{
+.content-inner .post-content .editor-content a{
     text-decoration: underline;
 }
 

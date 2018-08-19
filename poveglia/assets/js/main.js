@@ -14,7 +14,10 @@ jQuery(document).ready(function($) {
 
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
         h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-        readLaterPosts = [];
+        readLaterPosts = [],
+        lang = $('html').attr('lang'),
+        noBookmarksMessage = $('.no-bookmarks').text(),
+        monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "Sepember", "October", "November", "December"];
 
     // Check 'read later' posts 
     if (typeof Cookies.get('poveglia-read-later') !== "undefined") {
@@ -97,12 +100,19 @@ jQuery(document).ready(function($) {
                 tags = unique(tags);
 
                 $.each(tags, function(index, val) {
-                    $('#results').append('<h3>#'+ val +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
+                    var tag = val;
+                    if (val == 'Other') {
+                        tag = $('#results').attr('data-other');
+                    };
+                    $('#results').append('<h3>#'+ tag +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
                 });
 
                 $.each(results, function(index, val) {
                     var feature_image = '';
                     var classes = '';
+                    var dateSplit = val.pubDate.split(' ')
+                    var month = monthNames.indexOf(dateSplit[1])+1;
+                    var date = moment(dateSplit[0]+'-'+month+'-'+dateSplit[2], "DD-MM-YYYY").format('DD MMM YYYY');
                     if (val.feature_image) {
                         if (val.feature_image.substring(0, 4) == 'http') {
                             feature_image = 'style="background-image: url('+ val.feature_image +');"';
@@ -114,9 +124,9 @@ jQuery(document).ready(function($) {
                         classes += 'excerpt';
                     };
                     if (val.tags.length) {
-                        $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                        $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
                     }else{
-                        $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ val.pubDate +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                        $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
                     };
                 });
 
@@ -126,11 +136,8 @@ jQuery(document).ready(function($) {
 
                 readLaterPosts = readLater($('#results'), readLaterPosts);
             }else if($('#search-field').val().length && !results.length){
-                $('#results').append('<h3>No results were found.</h3><ul class="list-box loop row"><li class="col-md-12 item">Your search - <b>'+ $('#search-field').val() +'</b> - did not match any articles.</li></ul>');
+                $('#results').append('<h3>'+ $('#results').attr('data-no-results') +'</h3><ul class="list-box loop row"><li class="col-md-12 item">'+ $('#results').attr('data-no-results-description') +'</li></ul>');
             };
-
-
-
         }
     });
 
@@ -204,12 +211,19 @@ jQuery(document).ready(function($) {
                 tags.sort();
 
                 $.each(tags, function(index, val) {
-                    $('.bookmark-container').append('<h3>#'+ val +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
+                    var tag = val;
+                    if (val == 'Other') {
+                        tag = $('#results').attr('data-other');
+                    };
+                    $('.bookmark-container').append('<h3>#'+ tag +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
                 });
 
                 $.each(data.posts, function(index, val) {
                     var feature_image = '';
                     var classes = '';
+                    var dateSplit = prettyDate(val.published_at).split(' ')
+                    var month = monthNames.indexOf(dateSplit[1])+1;
+                    var date = moment(dateSplit[0]+'-'+month+'-'+dateSplit[2], "DD-MM-YYYY").format('DD MMM YYYY');
                     if (val.feature_image) {
                         if (val.feature_image.substring(0, 4) == 'http') {
                             feature_image = 'style="background-image: url('+ val.feature_image +');"';
@@ -221,9 +235,9 @@ jQuery(document).ready(function($) {
                         classes += 'excerpt';
                     };
                     if (val.tags.length) {
-                        $('.bookmark-container ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ prettyDate(val.created_at) +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                        $('.bookmark-container ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
                     }else{
-                        $('.bookmark-container ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><time>'+ val.pubDate +'</time><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ prettyDate(val.created_at) +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Bookmark article"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="Remove bookmark"></i></a></div></div></article></li>');
+                        $('.bookmark-container ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
                     };
                 });
 
@@ -249,17 +263,24 @@ jQuery(document).ready(function($) {
                     });
                 });
 
+                if (data.posts.length) {
+                    $('header .counter').removeClass('hidden').text(data.posts.length);
+                }else{
+                    $('header .counter').addClass('hidden');
+                    $('.bookmark-container').append('<p class="no-bookmarks">'+ noBookmarksMessage +'</p>');
+                };
+
             });
         }else{
             $('header .counter').addClass('hidden');
-            $('.bookmark-container').append('<p class="no-bookmarks">You haven\'t yet saved any bookmarks. To bookmark a post, just click <i class="far fa-bookmark"></i>.</p>')
+            $('.bookmark-container').append('<p class="no-bookmarks">'+ noBookmarksMessage +'</p>')
         };
 
     }
 
     function prettyDate(date) {
         var d = new Date(date);
-        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "Sepember", "October", "November", "December"];
             return d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + d.getFullYear();
     };
 
@@ -317,12 +338,12 @@ jQuery(document).ready(function($) {
         }
 
         // Load more posts on click
-        if (config['load-more']) {
+        if (config['load-more'] && typeof maxPages !== 'undefined') {
 
             $('#load-posts').addClass('visible').removeClass('hidden');
 
             if (currentPage == maxPages) {
-                $('#load-posts').addClass('finish').text('You\'ve reached the end of the list');
+                $('#load-posts').addClass('finish').text($('#load-posts').attr('data-last'));
                 return;
             };
 
@@ -471,9 +492,9 @@ jQuery(document).ready(function($) {
                 width: percentage + '%'
             });
             $('.progress').parent().addClass('visible');
-            $('.progress').attr('data-original-title', parseInt(percentage) + '% read');
+            $('.progress').attr('data-original-title', parseInt(percentage) + '% ' + $('.progress').attr('data-read'));
             if ($('.progress').attr('aria-describedby')) {
-                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text(parseInt(percentage) + '% read');
+                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text(parseInt(percentage) + '% ' + $('.progress').attr('data-read'));
             };
         }else if($(window).scrollTop() < postContentOffsetTop){
             $('.progress').css({
@@ -484,9 +505,9 @@ jQuery(document).ready(function($) {
             $('.progress').css({
                 width: '100%'
             });
-            $('.progress').attr('data-original-title', '100% read');
+            $('.progress').attr('data-original-title', '100% ' + $('.progress').attr('data-read'));
             if ($('.progress').attr('aria-describedby')) {
-                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text('100% read');
+                $('#' + $('.progress').attr('aria-describedby')).find('.tooltip-inner').text('100% ' + $('.progress').attr('data-read'));
             };
         };
     }

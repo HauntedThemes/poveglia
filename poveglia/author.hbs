@@ -22,7 +22,7 @@
                                 {{#if bio}}
                                     {{bio}}
                                 {{else}}
-                                    <a href="{{url}}">more posts</a> by this author.
+                                    <p>{{{t "Read <a href='{url}'>more posts</a> by this author." url=(url)}}}</p>
                                 {{/if}}
                                 {{#if location}} - {{location}}{{/if}}
                                 </p>

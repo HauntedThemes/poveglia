@@ -31,20 +31,20 @@
                                     <div class="col-sm-6">
                                         {{#if tags}}
                                             <div class="tags">
-                                                Tags: 
+                                                {{t "Tags"}}: 
                                                 {{tags}}
                                             </div>
                                         {{/if}}
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="share-post-footer">
-                                            Share:
+                                            {{t "Share"}}
                                             <ul class="share">
-                                                <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="top" title="Share on Twitter"><i class="fab fa-twitter"></i></a></li>
-                                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="top" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="https://plus.google.com/share?url={{url absolute="true"}}" class="google-plus" onclick="window.open(this.href, 'share-google-plus', 'width=400,height=466');return false;" data-toggle="tooltip" data-placement="top" title="Share on Google+"><i class="fab fa-google-plus-g"></i></a></li>
-                                                <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="top" title="Share on Reddit"><i class="fab fa-reddit-alien"></i></a></li>
-                                                <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="Share by email"><i class="fas fa-envelope"></i></a></li>
+                                                <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Twitter"}}"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Facebook"}}"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a href="https://plus.google.com/share?url={{url absolute="true"}}" class="google-plus" onclick="window.open(this.href, 'share-google-plus', 'width=400,height=466');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Google+"}}"><i class="fab fa-google-plus-g"></i></a></li>
+                                                <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="top" title="{{t "Share on Reddit"}}"><i class="fab fa-reddit-alien"></i></a></li>
+                                                <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="{{t "Share by Email"}}"><i class="fas fa-envelope"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -52,7 +52,7 @@
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <hr>
-                                        <a href="#" class="comments-trigger btn">Write a comment</a>
+                                        <a href="#" class="comments-trigger btn">{{t "Write a comment"}}</a>
                                         <div class="comments"></div>
                                         <hr>
                                     </div>
@@ -61,7 +61,7 @@
                             <div class="col-lg-4 col-md-12">
                                 <div class="sidebar">
                                     <div class="widget">
-                                        <h3 class="mini-title">Author</h3>
+                                        <h3 class="mini-title">{{t "Author"}}</h3>
                                         {{!-- Everything inside the #author tags pulls data from the author --}}
                                         {{#if authors}}
                                             <section class="authors">
@@ -79,7 +79,7 @@
                                                         {{#if bio}}
                                                             <p>{{bio}}</p>
                                                         {{else}}
-                                                            <p><a href="{{url}}">more posts</a> by this author.</p>
+                                                            <p>{{{t "Read <a href='{url}'>more posts</a> by this author." url=(url)}}}</p>
                                                         {{/if}}
                                                     </div>
                                                 </section>
@@ -88,31 +88,33 @@
                                         {{/if}}
                                     </div>
                                     <div class="widget widget-share">
-                                        <h3 class="mini-title">Share</h3>
+                                        <h3 class="mini-title">{{t "Share"}}</h3>
                                         <ul class="share">
-                                            <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="top" title="Share on Twitter"><i class="fab fa-twitter"></i></a></li>
-                                            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="top" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a href="https://plus.google.com/share?url={{url absolute="true"}}" class="google-plus" onclick="window.open(this.href, 'share-google-plus', 'width=400,height=466');return false;" data-toggle="tooltip" data-placement="top" title="Share on Google+"><i class="fab fa-google-plus-g"></i></a></li>
-                                            <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="top" title="Share on Reddit"><i class="fab fa-reddit-alien"></i></a></li>
-                                            <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="Share by email"><i class="fas fa-envelope"></i></a></li>
+                                            <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Twitter"}}"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Facebook"}}"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="https://plus.google.com/share?url={{url absolute="true"}}" class="google-plus" onclick="window.open(this.href, 'share-google-plus', 'width=400,height=466');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Google+"}}"><i class="fab fa-google-plus-g"></i></a></li>
+                                            <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="top" title="{{t "Share on Reddit"}}"><i class="fab fa-reddit-alien"></i></a></li>
+                                            <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="{{t "Share by Email"}}"><i class="fas fa-envelope"></i></a></li>
                                         </ul>
                                     </div>
-                                    <div class="widget">
-                                        <h3 class="mini-title">Recent posts</h3>
-                                        <div class="loop row">
-                                            {{#get "posts" limit="4" include="tags"}}
-                                                {{#foreach posts}}
-                                                    <div class="col-md-6 item">
-                                                        {{> "loop"}}
-                                                    </div>
-                                                {{/foreach}}
-                                            {{/get}}
-                                        </div>
-                                    </div>
+                                    {{#get "posts" limit="4" include="tags"}}
+                                        {{#if posts}}
+                                            <div class="widget">
+                                                <h3 class="mini-title">{{t "Recent posts"}}</h3>
+                                                <div class="loop row">
+                                                    {{#foreach posts}}
+                                                        <div class="col-md-6 item">
+                                                            {{> "loop"}}
+                                                        </div>
+                                                    {{/foreach}}
+                                                </div>
+                                            </div>
+                                        {{/if}}
+                                    {{/get}}
                                     {{#get "tags" limit="all"}}
                                         {{#if tags}}
                                             <div class="widget">
-                                                <h3 class="mini-title">Tags</h3>
+                                                <h3 class="mini-title">{{t "Tags"}}</h3>
                                                 <ul class="tags">
                                                 {{#foreach tags}}
                                                     <li>
@@ -124,22 +126,22 @@
                                         {{/if}}
                                     {{/get}}
                                     <div class="widget">
-                                        <h3 class="mini-title">Advertise</h3>
-                                        <div class="ads">Advertise here</div>
+                                        <h3 class="mini-title">{{t "Advertise"}}</h3>
+                                        <div class="ads">{{t "Advertise here"}}</div>
                                     </div>
                                     {{#if @labs.subscribers}}
                                     <div class="widget">
-                                        <h3 class="mini-title">Newsletter</h3>
+                                        <h3 class="mini-title">{{t "Newsletter"}}</h3>
                                         {{subscribe_form
                                             form_class="gh-signin"
                                             input_class="gh-input"
-                                            placeholder="Your email address"
+                                            placeholder=(t "Your email address")
                                         }}
                                     </div>
                                     {{/if}}
                                     {{#if @blog.twitter}}
                                     <div class="widget">
-                                        <h3 class="mini-title">Latest Tweets</h3>
+                                        <h3 class="mini-title">{{t "Latest Tweets"}}</h3>
                                         <div class="tweets" data-twitter="{{@blog.twitter}}"></div>
                                     </div>
                                     {{/if}}
@@ -150,19 +152,19 @@
                 </div>
             </div>
         </div>
-        {{#get "posts" limit="3" include="tags, author" filter="id:-{{id}}+tag:{{primary_tag.slug}}"}}
+        {{#get "posts" limit="3" include="tags" filter="id:-{{id}}+primary_tag:{{primary_tag.slug}}"}}
             {{#if posts}}
                 <div class="container related-posts">
                     <div class="row">
                         <div class="col-md-12">
-                            <h3>You might also like</h3>
+                            <h3>{{t "You might also like"}}</h3>
                             <div class="row loop">
                             {{#foreach posts}}
                                 <div class="col-lg-4 col-md-6 item">
                                     {{> "loop"}}
                                 </div>
                             {{/foreach}}
-                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>

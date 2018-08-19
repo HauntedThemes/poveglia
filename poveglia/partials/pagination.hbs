@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-12 text-center">
 			{{!-- Load more button - Visible only if it's enabled in main.js --}}
-			<a href="#" id="load-posts" data-posts_per_page="{{@config.posts_per_page}}" class="hidden btn">Load more posts</a>
+			<a href="#" id="load-posts" data-posts_per_page="{{@config.posts_per_page}}" data-last='{{t "You have reached the end of the list"}}' class="hidden btn">{{t "Load more posts"}}</a>
 
 			{{!-- Pagination --}}
 			<nav class="pagination" role="navigation">
@@ -10,15 +10,15 @@
 				<div class="row">
 					<div class="col-4 text-left">
 					    {{#if prev}}
-					        <a class="newer-posts btn" href="{{page_url prev}}"><i class="fas fa-angle-left"></i>Newer</a>
+					        <a class="newer-posts btn" href="{{page_url prev}}"><i class="fas fa-angle-left"></i>{{t "Newer Posts"}}</a>
 					    {{/if}}
 					</div>
 					<div class="col-4">
-			    		<span class="page-number">{{page}} of {{pages}}</span>
+			    		<span class="page-number">{{page}} {{t "of"}} {{pages}}</span>
 					</div>
 					<div class="col-4 text-right">
 					    {{#if next}}
-					        <a class="older-posts btn" href="{{page_url next}}">Older <i class="fas fa-angle-right"></i></a>
+					        <a class="older-posts btn" href="{{page_url next}}">{{t "Older Posts"}} <i class="fas fa-angle-right"></i></a>
 					    {{/if}}
 					</div>
 				</div>
