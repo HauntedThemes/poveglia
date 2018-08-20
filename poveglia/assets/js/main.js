@@ -19,13 +19,17 @@ jQuery(document).ready(function($) {
         noBookmarksMessage = $('.no-bookmarks').text(),
         monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "Sepember", "October", "November", "December"];
 
-    // Check 'read later' posts 
-    if (typeof Cookies.get('poveglia-read-later') !== "undefined") {
-        readLaterPosts = JSON.parse(Cookies.get('poveglia-read-later'));
-    }
+    if (typeof ghost !== 'undefined') {
 
-    readLaterPosts = readLater($('#content .loop'), readLaterPosts);
-    readLaterPosts = readLater($('.related-posts loop'), readLaterPosts);
+        // Check 'read later' posts 
+        if (typeof Cookies.get('poveglia-read-later') !== "undefined") {
+            readLaterPosts = JSON.parse(Cookies.get('poveglia-read-later'));
+        }
+
+        readLaterPosts = readLater($('#content .loop'), readLaterPosts);
+        readLaterPosts = readLater($('.related-posts loop'), readLaterPosts);
+
+    };
 
     $('.search-trigger, .bookmark-trigger').on('click', function(event) {
         event.preventDefault();
@@ -186,11 +190,15 @@ jQuery(document).ready(function($) {
     function bookmarks(readLaterPosts){
 
         $('.bookmark-container').empty();
+
+        readLaterPosts = readLaterPosts.filter(Boolean);
+
         if (readLaterPosts.length) {
 
             var url = [location.protocol, '//', location.host].join('');
 
             $('header .counter').removeClass('hidden').text(readLaterPosts.length);
+
             var filter = readLaterPosts.toString();
             filter = "id:["+filter+"]";
 

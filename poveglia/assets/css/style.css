@@ -448,6 +448,11 @@ header .navigation-trigger:hover{
     background: #eff0f1;
 }
 
+header .navigation:last-child{
+    margin-right: 0;
+    border-right: 0;
+}
+
 header .search{
     display: inline-block;
     margin-right: 30px;

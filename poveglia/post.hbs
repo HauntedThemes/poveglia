@@ -97,34 +97,36 @@
                                             <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="{{t "Share by Email"}}"><i class="fas fa-envelope"></i></a></li>
                                         </ul>
                                     </div>
-                                    {{#get "posts" limit="4" include="tags"}}
-                                        {{#if posts}}
-                                            <div class="widget">
-                                                <h3 class="mini-title">{{t "Recent posts"}}</h3>
-                                                <div class="loop row">
-                                                    {{#foreach posts}}
-                                                        <div class="col-md-6 item">
-                                                            {{> "loop"}}
-                                                        </div>
-                                                    {{/foreach}}
+                                    {{#if @labs.publicAPI}}
+                                        {{#get "posts" limit="4" include="tags"}}
+                                            {{#if posts}}
+                                                <div class="widget">
+                                                    <h3 class="mini-title">{{t "Recent posts"}}</h3>
+                                                    <div class="loop row">
+                                                        {{#foreach posts}}
+                                                            <div class="col-md-6 item">
+                                                                {{> "loop"}}
+                                                            </div>
+                                                        {{/foreach}}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        {{/if}}
-                                    {{/get}}
-                                    {{#get "tags" limit="all"}}
-                                        {{#if tags}}
-                                            <div class="widget">
-                                                <h3 class="mini-title">{{t "Tags"}}</h3>
-                                                <ul class="tags">
-                                                {{#foreach tags}}
-                                                    <li>
-                                                        <a href="{{url}}" title="{{name}}" class="btn tag tag-{{id}} {{slug}}">{{name}}</a>
-                                                    </li>  
-                                                {{/foreach}}
-                                                </ul>
-                                            </div>
-                                        {{/if}}
-                                    {{/get}}
+                                            {{/if}}
+                                        {{/get}}
+                                        {{#get "tags" limit="all"}}
+                                            {{#if tags}}
+                                                <div class="widget">
+                                                    <h3 class="mini-title">{{t "Tags"}}</h3>
+                                                    <ul class="tags">
+                                                    {{#foreach tags}}
+                                                        <li>
+                                                            <a href="{{url}}" title="{{name}}" class="btn tag tag-{{id}} {{slug}}">{{name}}</a>
+                                                        </li>  
+                                                    {{/foreach}}
+                                                    </ul>
+                                                </div>
+                                            {{/if}}
+                                        {{/get}}
+                                    {{/if}}
                                     <div class="widget">
                                         <h3 class="mini-title">{{t "Advertise"}}</h3>
                                         <div class="ads">{{t "Advertise here"}}</div>
@@ -152,24 +154,26 @@
                 </div>
             </div>
         </div>
-        {{#get "posts" limit="3" include="tags" filter="id:-{{id}}+primary_tag:{{primary_tag.slug}}"}}
-            {{#if posts}}
-                <div class="container related-posts">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h3>{{t "You might also like"}}</h3>
-                            <div class="row loop">
-                            {{#foreach posts}}
-                                <div class="col-lg-4 col-md-6 item">
-                                    {{> "loop"}}
+        {{#if @labs.publicAPI}}
+            {{#get "posts" limit="3" include="tags" filter="id:-{{id}}+primary_tag:{{primary_tag.slug}}"}}
+                {{#if posts}}
+                    <div class="container related-posts">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{{t "You might also like"}}</h3>
+                                <div class="row loop">
+                                {{#foreach posts}}
+                                    <div class="col-lg-4 col-md-6 item">
+                                        {{> "loop"}}
+                                    </div>
+                                {{/foreach}}
                                 </div>
-                            {{/foreach}}
                             </div>
                         </div>
                     </div>
-                </div>
-            {{/if}}
-        {{/get}}
+                {{/if}}
+            {{/get}}
+        {{/if}}
     </article>
 </main>
 
