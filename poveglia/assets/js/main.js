@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
         readLaterPosts = [],
         lang = $('html').attr('lang'),
         noBookmarksMessage = $('.no-bookmarks').text(),
-        monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "Sepember", "October", "November", "December"];
+        monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     if (typeof ghost !== 'undefined') {
 
