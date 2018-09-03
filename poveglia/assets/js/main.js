@@ -288,7 +288,7 @@ jQuery(document).ready(function($) {
 
     function prettyDate(date) {
         var d = new Date(date);
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "Sepember", "October", "November", "December"];
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             return d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + d.getFullYear();
     };
 
