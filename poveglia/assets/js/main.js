@@ -546,7 +546,7 @@ jQuery(document).ready(function($) {
                 },
             },
             submitHandler: function (form) {
-                $(this).find(".gh-signin").submit();              
+                $(form).submit();              
             }
         });
     });
