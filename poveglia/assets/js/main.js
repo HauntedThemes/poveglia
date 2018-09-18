@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
         h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
         readLaterPosts = [],
         lang = $('html').attr('lang'),
-        noBookmarksMessage = $('.no-bookmarks').text(),
+        noBookmarksMessage = $('.no-bookmarks').html(),
         monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     if (typeof ghost !== 'undefined') {
@@ -33,7 +33,9 @@ jQuery(document).ready(function($) {
 
     $('.search-trigger, .bookmark-trigger').on('click', function(event) {
         event.preventDefault();
-    });    
+    });   
+
+    setGalleryRation(); 
 
     function closePopover(id){
         $(id).find('.close').on('click', function(event) {
@@ -275,13 +277,15 @@ jQuery(document).ready(function($) {
                     $('header .counter').removeClass('hidden').text(data.posts.length);
                 }else{
                     $('header .counter').addClass('hidden');
-                    $('.bookmark-container').append('<p class="no-bookmarks">'+ noBookmarksMessage +'</p>');
+                    $('.bookmark-container').append('<p class="no-bookmarks"></p>');
+                    $('.no-bookmarks').html(noBookmarksMessage)
                 };
 
             });
         }else{
             $('header .counter').addClass('hidden');
-            $('.bookmark-container').append('<p class="no-bookmarks">'+ noBookmarksMessage +'</p>')
+            $('.bookmark-container').append('<p class="no-bookmarks"></p>');
+            $('.no-bookmarks').html(noBookmarksMessage)
         };
 
     }
@@ -319,6 +323,8 @@ jQuery(document).ready(function($) {
 
     // Execute on load
     $(window).on('load', function(event) {
+
+        setGalleryRation();
 
         $('.editor-content img, .inner-featured-image').each(function(index, el) {
             if (!$(this).parent().is("a")) {
@@ -601,5 +607,16 @@ jQuery(document).ready(function($) {
         w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
         setMenu(w);
     });
+
+    // Set the right proportion for images inside the gallery
+    function setGalleryRation(){
+        $('.kg-gallery-image img').each(function(index, el) {
+            var container = $(this).closest('.kg-gallery-image');
+            var width = $(this)[0].naturalWidth;
+            var height = $(this)[0].naturalHeight;
+            var ratio = width / height;
+            container.attr('style', 'flex: ' + ratio + ' 1 0%');
+        });
+    }
 
 });
