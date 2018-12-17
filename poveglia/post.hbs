@@ -10,12 +10,13 @@
             <div class="container">
                 <div class="row">   
                     <div class="col-xl-12 ml-auto mr-auto">
-                        <div class="row">
+                        <div class="row post-intro">
                             <div class="col-lg-8 col-md-12">
                                 <div class="post-meta">
                                     <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
                                     <div class="tags">{{tags limit="1"}}</div>
                                 </div>
+                                <a href="#" class="read-later" data-id="{{id}}"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="{{t "Bookmark article"}}"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="{{t "Remove bookmark"}}"></i></a>
                                 <h1 class="post-title">{{title}}</h1>
                             </div>
                         </div>

@@ -826,6 +826,11 @@ header .counter.shake{
     right: 10px;
 }
 
+.post-template .read-later{
+    opacity: 1;
+    top: -2px;
+}
+
 .read-later .fas,
 .read-later.active .far,
 .counter.hidden + .far + .fas,

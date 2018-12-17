@@ -28,6 +28,7 @@ jQuery(document).ready(function($) {
 
         readLaterPosts = readLater($('#content .loop'), readLaterPosts);
         readLaterPosts = readLater($('.related-posts loop'), readLaterPosts);
+        readLaterPosts = readLater($('.post-intro'), readLaterPosts);
 
     };
 
