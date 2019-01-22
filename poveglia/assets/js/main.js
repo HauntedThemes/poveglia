@@ -9,7 +9,9 @@ jQuery(document).ready(function($) {
         'load-more': true,
         'infinite-scroll': false,
         'infinite-scroll-step': 1,
-        'disqus-shortname': 'hauntedthemes-demo'
+        'disqus-shortname': 'hauntedthemes-demo',
+        'content-api-host': '',
+        'content-api-key': '',
     };
 
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
@@ -19,18 +21,21 @@ jQuery(document).ready(function($) {
         noBookmarksMessage = $('.no-bookmarks').html(),
         monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    if (typeof ghost !== 'undefined') {
+    var ghostAPI = new GhostContentAPI({
+        host: config['content-api-host'],
+        key: config['content-api-key'],
+        version: 'v2'
+    });
 
-        // Check 'read later' posts 
-        if (typeof Cookies.get('poveglia-read-later') !== "undefined") {
-            readLaterPosts = JSON.parse(Cookies.get('poveglia-read-later'));
-        }
+    // Check 'read later' posts 
+    if (typeof Cookies.get('poveglia-read-later') !== "undefined") {
+        readLaterPosts = JSON.parse(Cookies.get('poveglia-read-later'));
+    }
 
-        readLaterPosts = readLater($('#content .loop'), readLaterPosts);
-        readLaterPosts = readLater($('.related-posts loop'), readLaterPosts);
-        readLaterPosts = readLater($('.post-intro'), readLaterPosts);
+    readLaterPosts = readLater($('#content .loop'), readLaterPosts);
+    readLaterPosts = readLater($('.related-posts loop'), readLaterPosts);
+    readLaterPosts = readLater($('.post-intro'), readLaterPosts);
 
-    };
 
     $('.search-trigger, .bookmark-trigger').on('click', function(event) {
         event.preventDefault();
@@ -78,83 +83,85 @@ jQuery(document).ready(function($) {
       return url.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1");
     }
 
-    // Initialize ghostHunter - A Ghost blog search engine
-    var searchField = $("#search-field").ghostHunter({
-        results             : "#results",
-        onKeyUp             : true,
-        zeroResultsInfo     : true,
-        displaySearchInfo   : false,
-        onComplete          : function( results ){
+    var ghostSearch = new GhostSearch({
+        host: config['content-api-host'],
+        key: config['content-api-key'],
+        input: '#search-field',
+        results: '#results',
+        api: {
+            parameters: { 
+                fields: ['title', 'slug', 'published_at', 'primary_tag', 'id', 'feature_image'],
+                include: 'tags',
+            },
+        },
+        on: {
+            afterDisplay: function(results){
 
-            if (results.length) {
-                var url = [location.protocol, '//', location.host].join('');
+                if (results.length) {
 
-                $('#results').empty();
-
-                var tags = [];
-                $.each(results, function(index, val) {
-                    if (val.tags.length) {
-                        if ($.inArray(val.tags[0].name, tags) === -1) {
-                            tags.push(val.tags[0].name);
-                        };
-                    }else{
-                        if ($.inArray('Other', tags) === -1) {
-                            tags.push('Other');
-                        };
-                    };
-                });
-                tags.sort();
-                tags = unique(tags);
-
-                $.each(tags, function(index, val) {
-                    var tag = val;
-                    if (val == 'Other') {
-                        tag = $('#results').attr('data-other');
-                    };
-                    $('#results').append('<h3>#'+ tag +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
-                });
-
-                $.each(results, function(index, val) {
-                    var feature_image = '';
-                    var classes = '';
-                    var dateSplit = val.pubDate.split(' ')
-                    var month = monthNames.indexOf(dateSplit[1])+1;
-                    var date = moment(dateSplit[0]+'-'+month+'-'+dateSplit[2], "DD-MM-YYYY").format('DD MMM YYYY');
-                    if (val.feature_image) {
-                        if (val.feature_image.substring(0, 4) == 'http') {
-                            feature_image = 'style="background-image: url('+ val.feature_image +');"';
+                    $('#results').empty();
+                    
+                    var tags = [];
+                    $.each(results, function(index, val) {
+                        if (val.obj.primary_tag) {
+                            if ($.inArray(val.obj.primary_tag.name, tags) === -1) {
+                                tags.push(val.obj.primary_tag.name);
+                            };
                         }else{
-                            feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                            if ($.inArray('Other', tags) === -1) {
+                                tags.push('Other');
+                            };
                         };
-                        classes += 'featured-image';
-                    }else{
-                        classes += 'excerpt';
-                    };
-                    if (val.tags.length) {
-                        $('#results ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
-                    }else{
-                        $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.link +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.link +'">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
-                    };
-                });
+                    });
 
-                $('#results [data-toggle="tooltip"]').tooltip({
-                    trigger: 'hover'
-                });
+                    tags.sort();
 
-                readLaterPosts = readLater($('#results'), readLaterPosts);
-            }else if($('#search-field').val().length && !results.length){
-                $('#results').append('<h3>'+ $('#results').attr('data-no-results') +'</h3><ul class="list-box loop row"><li class="col-md-12 item">'+ $('#results').attr('data-no-results-description') +'</li></ul>');
-            };
+                    $.each(tags, function(index, val) {
+                        var tag = val;
+                        if (val == 'Other') {
+                            tag = $('#results').attr('data-other');
+                        };
+                        $('#results').append('<h3>'+ tag +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
+                    });
+
+                    $.each(results, function(index, val) {
+                        var feature_image = '';
+                        var classes = '';
+                        var dateSplit = val.obj.published_at.split('T');
+                        dateSplit = dateSplit[0].split('-');
+                        var month = monthNames[dateSplit[1]-1];
+                        var date = moment(dateSplit[2]+'-'+month+'-'+dateSplit[1], "DD-MM-YYYY").format('DD MMM YYYY');
+                        if (val.obj.feature_image) {
+                            if (val.obj.feature_image.substring(0, 4) == 'http') {
+                                feature_image = 'style="background-image: url('+ val.obj.feature_image +');"';
+                            }else{
+                                val.obj.feature_image = val.obj.feature_image.replace("/images/", "/images/size/w167h125/");
+                                feature_image = 'style="background-image: url('+ url + val.obj.feature_image +');"';
+                            };
+                            classes += 'featured-image';
+                        }else{
+                            classes += 'excerpt';
+                        };
+                        if (val.obj.primary_tag) {
+                            $('#results ul[data-tag="'+ val.obj.primary_tag.name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.obj.slug +'" class="'+ classes +'" title="'+ val.obj.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.obj.slug +'">'+ val.obj.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later" data-id="'+ val.obj.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
+                        }else{
+                            $('#results ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.obj.slug +'" class="'+ classes +'" title="'+ val.obj.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.obj.slug +'">'+ val.obj.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later" data-id="'+ val.obj.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
+                        };
+                    });
+
+                    $('#results [data-toggle="tooltip"]').tooltip({
+                        trigger: 'hover'
+                    });                
+
+                    readLaterPosts = readLater($('#results'), readLaterPosts);
+                
+                }else if($('#search-field').val().length && !results.length){
+                    $('#results').append('<h3>'+ $('#results').attr('data-no-results') +'</h3><ul class="list-box loop row"><li class="col-md-12 item">'+ $('#results').attr('data-no-results-description') +'</li></ul>');
+                };
+
+            },
         }
-    });
-
-    function unique(list) {
-        var result = [];
-        $.each(list, function(i, e) {
-            if ($.inArray(e, result) == -1) result.push(e);
-        });
-        return result;
-    }
+    })
 
     function readLater(content, readLaterPosts){
 
@@ -205,84 +212,90 @@ jQuery(document).ready(function($) {
             var filter = readLaterPosts.toString();
             filter = "id:["+filter+"]";
 
-            $.get(ghost.url.api('posts', {filter:filter, include:"tags"})).done(function (data){
-                $('.bookmark-container').empty();
-                var tags = [];
-                $.each(data.posts, function(index, val) {
-                    if (val.tags.length) {
-                        if ($.inArray(val.tags[0].name, tags) === -1) {
-                            tags.push(val.tags[0].name);
-                        };
-                    }else{
-                        if ($.inArray('Other', tags) === -1) {
-                            tags.push('Other');
-                        };
-                    };
-                });
-                tags.sort();
+            ghostAPI.posts
+                .browse({limit: 'all', filter: filter, include: 'tags'})
+                .then((results) => {
 
-                $.each(tags, function(index, val) {
-                    var tag = val;
-                    if (val == 'Other') {
-                        tag = $('#results').attr('data-other');
-                    };
-                    $('.bookmark-container').append('<h3>#'+ tag +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
-                });
+                    $('.bookmark-container').empty();
 
-                $.each(data.posts, function(index, val) {
-                    var feature_image = '';
-                    var classes = '';
-                    var dateSplit = prettyDate(val.published_at).split(' ')
-                    var month = monthNames.indexOf(dateSplit[1])+1;
-                    var date = moment(dateSplit[0]+'-'+month+'-'+dateSplit[2], "DD-MM-YYYY").format('DD MMM YYYY');
-                    if (val.feature_image) {
-                        if (val.feature_image.substring(0, 4) == 'http') {
-                            feature_image = 'style="background-image: url('+ val.feature_image +');"';
+                    var tags = [];
+                    $.each(results, function(index, val) {
+                        if (val.primary_tag) {
+                            if ($.inArray(val.primary_tag.name, tags) === -1) {
+                                tags.push(val.primary_tag.name);
+                            };
                         }else{
-                            feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                            if ($.inArray('Other', tags) === -1) {
+                                tags.push('Other');
+                            };
                         };
-                        classes += 'featured-image';
-                    }else{
-                        classes += 'excerpt';
-                    };
-                    if (val.tags.length) {
-                        $('.bookmark-container ul[data-tag="'+ val.tags[0].name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
-                    }else{
-                        $('.bookmark-container ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="/'+ val.slug +'/" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="/'+ val.slug +'/">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
-                    };
-                });
-
-                $('.bookmark-container [data-toggle="tooltip"]').tooltip({
-                    trigger: 'hover'
-                });
-
-                $('.bookmark-container').find('.read-later').each(function(index, el) {
-                    $(this).on('click', function(event) {
-                        event.preventDefault();
-                        var id = $(this).attr('data-id');
-                        if ($(this).hasClass('active')) {
-                            removeValue(readLaterPosts, id);
-                            $('.tooltip').remove();
-                        }else{
-                            readLaterPosts.push(id);
-                        };
-                        $('.read-later[data-id="'+ id +'"]').each(function(index, el) {
-                            $(this).toggleClass('active');
-                        });
-                        Cookies.set('poveglia-read-later', readLaterPosts, { expires: 365 });
-                        bookmarks(readLaterPosts);
                     });
+    
+                    tags.sort();
+
+                    $.each(tags, function(index, val) {
+                        var tag = val;
+                        if (val == 'Other') {
+                            tag = $('.bookmark-container').attr('data-other');
+                        };
+                        $('.bookmark-container').append('<h3>'+ tag +'</h3><ul data-tag="'+ val +'" class="list-box loop row"></ul>');
+                    });
+    
+                    $.each(results, function(index, val) {
+                        var feature_image = '';
+                        var classes = '';
+                        var dateSplit = val.published_at.split('T');
+                        dateSplit = dateSplit[0].split('-');
+                        var month = monthNames[dateSplit[1]-1];
+                        var date = moment(dateSplit[2]+'-'+month+'-'+dateSplit[1], "DD-MM-YYYY").format('DD MMM YYYY');
+                        if (val.feature_image) {
+                            if (val.feature_image.substring(0, 4) == 'http') {
+                                feature_image = 'style="background-image: url('+ val.feature_image +');"';
+                            }else{
+                                val.feature_image = val.feature_image.replace("/images/", "/images/size/w167h125/");
+                                feature_image = 'style="background-image: url('+ url + val.feature_image +');"';
+                            };
+                            classes += 'featured-image';
+                        }else{
+                            classes += 'excerpt';
+                        };
+                        if (val.primary_tag) {
+                            $('.bookmark-container ul[data-tag="'+ val.primary_tag.name +'"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.slug +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.slug +'">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
+                        }else{
+                            $('.bookmark-container ul[data-tag="Other"]').append('<li class="col-md-4 item"><article class="post"><div class="post-inner-content"><div class="img-holder"> <a href="'+ val.slug +'" class="'+ classes +'" title="'+ val.title +'"' + feature_image + '></a> </div><div class="inner"><h2><a href="'+ val.slug +'">'+ val.title +'</a></h2><time>'+ date +'</time><a href="#" class="read-later active" data-id="'+ val.id +'"><i class="far fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-bookmark-article') +'"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-trigger="hover" data-placement="right" title="'+ $('#results').attr('data-remove-bookmark') +'"></i></a></div></div></article></li>');
+                        };
+                    });
+
+                    $('.bookmark-container').find('.read-later').each(function(index, el) {
+                        $(this).on('click', function(event) {
+                            event.preventDefault();
+                            var id = $(this).attr('data-id');
+                            if ($(this).hasClass('active')) {
+                                removeValue(readLaterPosts, id);
+                            }else{
+                                readLaterPosts.push(id);
+                            };
+                            $('.read-later[data-id="'+ id +'"]').each(function(index, el) {
+                                $(this).toggleClass('active');
+                            });
+                            Cookies.set('poveglia-read-later', readLaterPosts, { expires: 365 });
+                            bookmarks(readLaterPosts);
+                        });
+                    });
+
+                    if (results) {
+                        $('header .counter').removeClass('hidden').text(results.length);
+                    }else{
+                        $('header .counter').addClass('hidden');
+                        $('.bookmark-container').append('<p class="no-bookmarks"></p>');
+                        $('.no-bookmarks').html(noBookmarksMessage)
+                    };
+
+                })
+                .catch((err) => {
+                    console.error(err);
                 });
 
-                if (data.posts.length) {
-                    $('header .counter').removeClass('hidden').text(data.posts.length);
-                }else{
-                    $('header .counter').addClass('hidden');
-                    $('.bookmark-container').append('<p class="no-bookmarks"></p>');
-                    $('.no-bookmarks').html(noBookmarksMessage)
-                };
-
-            });
         }else{
             $('header .counter').addClass('hidden');
             $('.bookmark-container').append('<p class="no-bookmarks"></p>');
@@ -290,12 +303,6 @@ jQuery(document).ready(function($) {
         };
 
     }
-
-    function prettyDate(date) {
-        var d = new Date(date);
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            return d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + d.getFullYear();
-    };
 
     function removeValue(arr) {
         var what, a = arguments, L = a.length, ax;
