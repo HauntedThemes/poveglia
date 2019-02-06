@@ -20,7 +20,7 @@
                         <article class="{{post_class}}">
                             <h1 class="post-title">
                                 {{^if success}}
-                                    {{t "Subscribe to {blogtitle}" blogtitle=@blog.title}}
+                                    {{t "Subscribe to {blogtitle}" blogtitle=@site.title}}
                                 {{else}}
                                     {{t "Subscribed!"}}
                                 {{/if}}
@@ -34,7 +34,7 @@
                                     }}
                                 {{else}}
                                     <p>
-                                        {{t "You've successfully subscribed to"}} <em>{{@blog.title}}</em>
+                                        {{t "You've successfully subscribed to"}} <em>{{@site.title}}</em>
                                         {{t "with the email address"}} <em>{{email}}</em>.
                                     </p>
                                 {{/if}}

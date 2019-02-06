@@ -2,7 +2,7 @@
     "name": "poveglia",
     "description": "Poveglia is a carefully crafted, multipurpose, responsive, clean Ghost theme that helps you build a simple yet stunning blog for your business. No fuss. ",
     "demo": "https://poveglia.hauntedthemes.com/",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "license": "GNU General Public License, Version 2",
     "engines": {
         "ghost": ">=2.0.0",
