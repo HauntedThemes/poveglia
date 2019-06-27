@@ -8,13 +8,13 @@
 	            <h3>Stack Trace</h3>
 	            <p><strong>{{message}}</strong></p>
 	            <ul class="error-stack-list">
-	                {{#each stack as |item|}}
+	                {{#foreach stack as |item|}}
 	                    <li>
 	                        at
 	                        {{#if item.function}}<em class="error-stack-function">{{item.function}}</em>{{/if}}
 	                        <span class="error-stack-file">({{item.at}})</span>
 	                    </li>
-	                {{/each}}
+	                {{/foreach}}
 	            </ul>
 	        </section>
 	    {{/if}}
