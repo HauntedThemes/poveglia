@@ -1,0 +1,97 @@
+footer {
+	color: $dark_grey;
+	background: $light_grey;
+	padding-top: 50px;
+	text-align: center;
+	margin-top: 50px;
+	h3 {
+		margin-top: 0;
+		margin-bottom: 10px;
+		padding: 0;
+	}
+	.copyright {
+		margin-top: 50px;
+		background: $white;
+		a {
+			border-bottom: 1px solid transparent;
+			&:hover {
+				border-bottom: 1px solid $blue;
+			}
+		}
+		p {
+			margin: 20px 0;
+			font-size: 0.875rem;
+		}
+	}
+	.subscribe-container {
+		margin-bottom: 50px;
+	}
+	.share {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		a {
+			width: 60px;
+			height: 60px;
+			font-size: 1.375rem;
+			margin: 0 10px;
+		}
+	}
+	input[type="email"] {
+		border: 3px solid $white;
+		background: $light_grey;
+	}
+}
+.go-up {
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	opacity: 0;
+	pointer-events: none;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: $small) {
+	.go-up {
+		display: none;
+	}
+}
+
+@media (max-width: $small) {
+	footer {
+		margin-top: 30px;
+		input[type="email"] {
+			padding: 10px 20px;
+			font-size: 0.875rem;
+			margin: 0 10px 10px 0;
+		}
+		.share {
+			a {
+				width: 30px;
+				height: 30px;
+				font-size: 0.75rem;
+				margin: 0;
+			}
+			li {
+				margin-right: 5px;
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}

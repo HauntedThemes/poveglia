@@ -1,0 +1,175 @@
+{{!-- The tag below means - insert everything in this file into the {body} of the default.hbs template --}}
+{{!< default}}
+
+{{!-- Everything inside the #post tags pulls data from the post --}}
+{{#post}}
+
+<main id="content" role="main" data-id={{comment_id}}>
+    <article class="{{post_class}}">
+        <div class="content-inner">
+            <div class="container">
+                <div class="row">   
+                    <div class="col-xl-12 ml-auto mr-auto">
+                        <div class="row post-intro">
+                            <div class="col-lg-8 col-md-12">
+                                <div class="post-meta">
+                                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+                                    <div class="tags">{{tags limit="1"}}</div>
+                                </div>
+                                <a href="#" class="read-later" data-id="{{comment_id}}"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="{{t "Bookmark article"}}"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="{{t "Remove bookmark"}}"></i></a>
+                                <h1 class="post-title">{{title}}</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 col-md-12">
+                                {{#if feature_image}}
+                                    <img src="{{img_url feature_image size="l"}}" class="inner-featured-image" alt="{{title}}">
+                                {{/if}}
+                                <div class="editor-content">
+                                    {{content}}
+                                </div>
+                                <div class="row post-footer">
+                                    <div class="col-sm-6">
+                                        {{#if tags}}
+                                            <div class="tags">
+                                                {{t "Tags"}}: 
+                                                {{tags}}
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="share-post-footer">
+                                            {{t "Share"}}
+                                            <ul class="share">
+                                                <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Twitter"}}"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Facebook"}}"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="top" title="{{t "Share on Reddit"}}"><i class="fab fa-reddit-alien"></i></a></li>
+                                                <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="{{t "Share by Email"}}"><i class="fas fa-envelope"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <hr>
+                                        <a href="#" class="comments-trigger btn">{{t "Write a comment"}}</a>
+                                        <div class="comments"></div>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-12">
+                                <div class="sidebar">
+                                    <div class="widget">
+                                        <h3 class="mini-title">{{t "Author"}}</h3>
+                                        {{!-- Everything inside the #author tags pulls data from the author --}}
+                                        {{#if authors}}
+                                            <section class="authors">
+                                            {{#foreach authors}}
+                                                <section class="author">
+                                                    {{#if profile_image}}
+                                                    <figure class="author-image">
+                                                        <a class="img" href="{{url}}" title="{{name}}"><img src="{{img_url profile_image size="xs"}}" alt="{{name}}"></a>
+                                                    </figure>
+                                                    {{else}}
+                                                        <a class="no-image" href="{{url}}" title="{{name}}"><i class="fas fa-user"></i></a>
+                                                    {{/if}}
+                                                    <div class="author-content">
+                                                        <h4><a href="{{url}}">{{name}}</a></h4>
+                                                        {{#if bio}}
+                                                            <p>{{bio}}</p>
+                                                        {{else}}
+                                                            <p>{{{t "Read <a href='{url}'>more posts</a> by this author." url=(url)}}}</p>
+                                                        {{/if}}
+                                                    </div>
+                                                </section>
+                                            {{/foreach}}
+                                            </section>
+                                        {{/if}}
+                                    </div>
+                                    <div class="widget widget-share">
+                                        <h3 class="mini-title">{{t "Share"}}</h3>
+                                        <ul class="share">
+                                            <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Twitter"}}"><i class="fab fa-twitter"></i></a></li>
+                                            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="top" title="{{t "Share on Facebook"}}"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="top" title="{{t "Share on Reddit"}}"><i class="fab fa-reddit-alien"></i></a></li>
+                                            <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="top" title="{{t "Share by Email"}}"><i class="fas fa-envelope"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    {{#get "posts" limit="4" include="tags"}}
+                                        {{#if posts}}
+                                            <div class="widget">
+                                                <h3 class="mini-title">{{t "Recent posts"}}</h3>
+                                                <div class="loop row">
+                                                    {{#foreach posts}}
+                                                        <div class="col-md-6 item">
+                                                            {{> "loop"}}
+                                                        </div>
+                                                    {{/foreach}}
+                                                </div>
+                                            </div>
+                                        {{/if}}
+                                    {{/get}}
+                                    {{#get "tags" limit="all"}}
+                                        {{#if tags}}
+                                            <div class="widget">
+                                                <h3 class="mini-title">{{t "Tags"}}</h3>
+                                                <ul class="tags">
+                                                {{#foreach tags}}
+                                                    <li>
+                                                        <a href="{{url}}" title="{{name}}" class="btn tag tag-{{comment_id}} {{slug}}">{{name}}</a>
+                                                    </li>  
+                                                {{/foreach}}
+                                                </ul>
+                                            </div>
+                                        {{/if}}
+                                    {{/get}}
+                                    <div class="widget">
+                                        <h3 class="mini-title">{{t "Advertise"}}</h3>
+                                        <div class="ads">{{t "Advertise here"}}</div>
+                                    </div>
+                                    {{#if @labs.subscribers}}
+                                    <div class="widget">
+                                        <h3 class="mini-title">{{t "Newsletter"}}</h3>
+                                        {{subscribe_form
+                                            form_class="gh-signin"
+                                            input_class="gh-input"
+                                            placeholder=(t "Your email address")
+                                        }}
+                                    </div>
+                                    {{/if}}
+                                    {{#if @site.twitter}}
+                                    <div class="widget">
+                                        <h3 class="mini-title">{{t "Latest Tweets"}}</h3>
+                                        <div class="tweets" data-twitter="{{@site.twitter}}"></div>
+                                    </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{#get "posts" limit="3" include="tags" filter="id:-{{comment_id}}+primary_tag:{{primary_tag.slug}}"}}
+            {{#if posts}}
+                <div class="container related-posts">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>{{t "You might also like"}}</h3>
+                            <div class="row loop">
+                            {{#foreach posts}}
+                                <div class="col-lg-4 col-md-6 item">
+                                    {{> "loop"}}
+                                </div>
+                            {{/foreach}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        {{/get}}
+    </article>
+</main>
+
+{{/post}}

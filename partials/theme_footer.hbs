@@ -1,0 +1,43 @@
+    <footer class="site-footer clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    {{#if @labs.subscribers}}
+                    <div class="row">
+                        <div class="col-xl-6 col-md-8 mr-auto ml-auto">
+                            <h3>{{t "Newsletter"}}</h3>
+                            <div class="subscribe-container">
+                                <p>{{t "Subscribe to our newsletter to receive our latest news."}}</p>
+                                {{subscribe_form
+                                    form_class="gh-signin"
+                                    input_class="gh-input"
+                                    placeholder=(t "Your email address")
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <ul class="share">
+                        {{#if @site.facebook}}
+                            <li><a href="{{facebook_url}}" class="facebook" target="_blank" data-toggle="tooltip" data-placement="top" title="{{@site.facebook}}"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                        {{/if}}
+                        {{#if @site.twitter}}
+                            <li><a href="{{twitter_url}}" class="twitter" target="_blank" data-toggle="tooltip" data-placement="top" title="{{@site.twitter}}"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                        {{/if}}
+                        <li><a href="https://www.youtube.com/" class="youtube" title="{{t "Youtube"}}" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>
+                        <li><a href="https://www.instagram.com/" class="instagram" title="{{t "Instagram"}}" target="_blank" data-toggle="tooltip" data-placement="top"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="{{@site.url}}/rss" target="_blank" data-toggle="tooltip" data-placement="top" title="{{t "RSS Feed"}}"><i class="fas fa-rss" aria-hidden="true" data-toggle="tooltip" data-placement="top"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>{{t "Copyright"}} &copy; {{date format="YYYY"}}, <a href="{{@site.url}}">{{@site.title}}</a>. {{t "All Right Reserved"}}.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" class="go-up btn"><i class="fas fa-arrow-up"></i></a>

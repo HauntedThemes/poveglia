@@ -1,0 +1,40 @@
+.pagination {
+	display: block;
+	i {
+		display: none;
+	}
+	.btn {
+		padding: 10px 20px;
+		font-size: 0.875rem;
+		margin: 0;
+	}
+	span {
+		font-size: 0.875rem;
+		height: 47px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}
+#load-posts {
+	margin: 50px 0;
+}
+
+@media (max-width: $small) {
+	#load-posts {
+		margin: 20px 0;
+		font-size: 0.875rem;
+	}
+}
+
+#load-posts.finish {
+	opacity: .6;
+	pointer-events: none;
+}
+#load-posts.visible {
+	+ {
+		.pagination {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,30 @@
+{{!-- This is the post loop - each post will be output using this markup --}}
+<article class="{{post_class}}" data-id={{comment_id}}>
+    <div class="post-inner-content">
+        {{#if feature_image}}
+            <div class="img-holder">
+                <a href="{{url}}" class="featured-image" title="{{title}}" style="background-image: url({{img_url feature_image size="m"}});"></a>
+            </div>
+        {{else}}
+            <a href="{{url}}" class="excerpt" title="{{title}}">
+                <span>{{excerpt}}</span>
+            </a>
+        {{/if}}
+        <div class="inner">
+            <h2 class="post-title"><a href="{{url}}" title="{{title}}">{{title}}</a></h2> 
+            <div class="post-meta">
+                <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMMM YYYY"}}</time>
+                {{#if tags}}
+                <div class="tags">{{tags limit=1}}</div>
+                {{/if}}
+            </div>
+            <a href="#" class="read-later" data-id="{{comment_id}}"><i class="far fa-bookmark" data-toggle="tooltip" data-placement="right" title="{{t "Bookmark article"}}"></i><i class="fas fa-bookmark" data-toggle="tooltip" data-placement="right" title="{{t "Remove bookmark"}}"></i></a>
+        </div>
+        <ul class="share">
+            <li><a href="https://twitter.com/share?text={{encode title}}&amp;url={{url absolute="true"}}" class="twitter" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;" data-toggle="tooltip" data-placement="right" title="{{t "Share on Twitter"}}"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" class="facebook" onclick="window.open(this.href, 'share-facebook', 'width=580,height=296');return false;" data-toggle="tooltip" data-placement="right" title="{{t "Share on Facebook"}}"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="https://www.reddit.com/submit?url={{url absolute="true"}}" target="_blank" class="reddit" data-toggle="tooltip" data-placement="right" title="{{t "Share on Reddit"}}"><i class="fab fa-reddit-alien"></i></a></li>
+            <li><a href="mailto:?subject={{encode title}}" class="email" data-toggle="tooltip" data-placement="right" title="{{t "Share by Email"}}"><i class="fas fa-envelope"></i></a></li>
+        </ul>
+    </div>
+</article>

@@ -1,0 +1,239 @@
+.sidebar {
+	.widget {
+		&:first-child {
+			h3 {
+				margin-top: 0;
+				padding-top: 0;
+			}
+		}
+		&:last-child {
+			padding-bottom: 50px;
+		}
+		h3 {
+			border-bottom: 1px solid $light_grey;
+			padding-bottom: 10px;
+		}
+		.loop {
+			.item {
+				&:nth-last-child(-n+2) {
+					.post {
+						margin-bottom: 0;
+					}
+				}
+			}
+		}
+		.tags {
+			display: flex;
+			flex-wrap: wrap;
+			.btn {
+				padding: 10px 20px;
+				font-size: 0.875rem;
+				margin: 0 10px 10px 0;
+			}
+		}
+		.ads {
+			width: 100%;
+			height: 200px;
+			background: $light_grey;
+			border-radius: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-transform: uppercase;
+			font-size: 0.75rem;
+		}
+		.gh-input {
+			padding: 10px 20px;
+			font-size: 0.875rem;
+			margin: 0 10px 10px 0;
+			background: $white;
+		}
+		button[type="submit"] {
+			background: $light_grey;
+			height: 40px;
+			padding: 0 20px;
+			font-size: 0.875rem;
+		}
+	}
+	.widget-share {
+		.share {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			a {
+				width: 60px;
+				height: 60px;
+				font-size: 1rem;
+				border: 3px solid $light_grey;
+				background: transparent;
+				&:hover {
+					color: $white;
+				}
+			}
+			.twitter {
+				color: $twitter;
+				&:hover {
+					background: $twitter;
+					border: 3px solid $twitter;
+				}
+			}
+			.facebook {
+				color: $facebook;
+				&:hover {
+					background: $facebook;
+					border: 3px solid $facebook;
+				}
+			}
+			.reddit {
+				color: $reddit;
+				&:hover {
+					background: $reddit;
+					border: 3px solid $reddit;
+				}
+			}
+			.email {
+				color: $email;
+				&:hover {
+					background: $email;
+					border: 3px solid $email;
+				}
+			}
+		}
+	}
+	.img-holder {
+		margin-bottom: 0;
+	}
+	.loop {
+		h2 {
+			margin: 5px 0;
+			padding: 0;
+			font-size: 1rem;
+		}
+		.inner {
+			padding: 10px 0 0 0;
+		}
+		.read-later {
+			top: 3px;
+		}
+		.post.featured {
+			.img-holder {
+				&:before {
+					display: none;
+				}
+			}
+		}
+		.post {
+			.share {
+				display: none;
+			}
+			.excerpt {
+				span {
+					display: none;
+				}
+				&:after {
+					content: "\f0c1";
+					font-family: $icons_font;
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-weight: 900;
+					color: $light_grey;
+					font-size: 2rem;
+				}
+			}
+			.tags {
+				display: none;
+			}
+			.read-later {
+				bottom: -5px;
+				top: auto;
+				right: 0;
+			}
+		}
+	}
+	.post.featured {
+		.excerpt {
+			border: 3px solid $light_grey;
+		}
+	}
+	.author {
+		align-items: flex-start;
+	}
+}
+
+@media (max-width: $large) {
+	.sidebar {
+		.widget-share {
+			.share {
+				a {
+					width: 50px;
+					height: 50px;
+				}
+			}
+		}
+		.widget {
+			.tags {
+				.btn {
+					padding: 5px 10px;
+				}
+			}
+		}
+	}
+	.editor-content {
+		iframe[src*="https://www.youtube.com/"] {
+			height: calc(610px / 1.77777778) !important;
+		}
+	}
+	.modal {
+		.close {
+			font-size: 1.25rem;
+		}
+	}
+}
+
+@media (max-width: $medium) {
+	.sidebar {
+		.loop {
+			.post {
+				.excerpt {
+					span {
+						display: block;
+					}
+					&:after {
+						display: none;
+					}
+				}
+			}
+		}
+		.widget-share {
+			.share {
+				justify-content: flex-start;
+				a {
+					margin-right: 5px;
+				}
+			}
+		}
+		margin-top: 50px;
+	}
+}
+
+@media (max-width: $small) {
+	.sidebar {
+		.widget {
+			.loop {
+				.item {
+					&:nth-last-child(-n+2) {
+						.post {
+							margin-bottom: 30px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

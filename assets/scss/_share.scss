@@ -1,0 +1,162 @@
+.share-selected-text-main-container {
+	position: absolute;
+	margin-left: 10%;
+	width: 80%;
+	opacity: 0;
+	margin-top: 7px;
+	-webkit-transform: translateY(5px);
+	-ms-transform: translateY(5px);
+	transform: translateY(5px);
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	z-index: 99;
+	pointer-events: none;
+	.share-selected-text-inner {
+		-webkit-flex: 1;
+		-ms-flex: 1;
+		flex: 1;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-justify-content: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
+		border-radius: 50%;
+		background: $dark_grey;
+		height: 100%;
+		pointer-events: none;
+		position: relative;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: -4px;
+			left: 0;
+			right: 0;
+			margin: auto;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 7px 7.5px 0;
+			border-color: $dark_grey transparent transparent;
+			-webkit-transition: all 0.3s ease-in-out;
+			-moz-transition: all 0.3s ease-in-out;
+			-o-transition: all 0.3s ease-in-out;
+			transition: all 0.3s ease-in-out;
+		}
+		&:hover {
+			&:after {
+				border-color: $twitter transparent transparent;
+			}
+		}
+	}
+	.share-selected-text-btn {
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-justify-content: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
+		text-transform: uppercase;
+		font-weight: 700;
+		color: $white;
+		height: 100%;
+		margin: 0;
+		padding: 0 20px;
+		border-radius: 50%;
+		-webkit-transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+		transition: all 0.3s ease-in-out;
+		width: 50px;
+		&:hover {
+			background: $twitter;
+		}
+		.icon-sst-twitter {
+			&:before {
+				font-size: 0.875rem;
+				font-style: normal;
+			}
+		}
+	}
+}
+.share-selected-text-main-container.active {
+	opacity: 1;
+	-webkit-transform: translateY(0);
+	-ms-transform: translateY(0);
+	transform: translateY(0);
+	z-index: 999;
+	.share-selected-text-inner {
+		pointer-events: auto;
+	}
+}
+.share {
+	margin-top: -10px;
+	position: relative;
+	perspective: 250px;
+	padding: 10px 10px 0 10px;
+	z-index: 10;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+	a {
+		width: 30px;
+		height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 0.75rem;
+		color: $white;
+		border-radius: 5px;
+		margin-bottom: 3px;
+		background: $grey;
+		&:hover {
+			filter: brightness(1.1);
+		}
+	}
+	.twitter {
+		background: $twitter;
+	}
+	.facebook {
+		background: $facebook;
+	}
+	.reddit {
+		background: $reddit;
+	}
+	.email {
+		background: $email;
+	}
+	.youtube {
+		background: $youtube;
+	}
+	.instagram {
+		background: $instagram;
+	}
+}
