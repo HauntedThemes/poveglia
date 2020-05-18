@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
         monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     var ghostAPI = new GhostContentAPI({
-        url: config['content-api-host'],
+        url: config['content-api-url'],
         key: config['content-api-key'],
         version: 'v3'
     });
@@ -77,7 +77,7 @@ jQuery(document).ready(function($) {
     }
 
     var ghostSearch = new GhostSearch({
-        host: config['content-api-host'],
+        url: config['content-api-url'],
         key: config['content-api-key'],
         input: '#search-field',
         results: '#results',
@@ -394,7 +394,7 @@ jQuery(document).ready(function($) {
                         $('#content .loop').imagesLoaded( function() {
                             var animeOpts = {
                                 duration: 800,
-                                easing: [0.1,1,0.3,1],
+                                easing: 'linear',
                                 delay: function(t,i) {
                                     return i*35;
                                 },
