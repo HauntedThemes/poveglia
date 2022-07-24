@@ -23,7 +23,7 @@
                                     <div class="col-md-4 ml-auto">
                                         <div class="checkout-plan">
                                             <h3>{{t "Monthly"}}</h3>
-                                            <div class="pricing"><span>$</span><strong>{{@price.monthly}}</strong> / {{t "month"}}</div>
+                                            <div class="pricing"><span>$</span><strong>{{price monthly_price currency=currency}}</strong> / {{t "month"}}</div>
                                             <div class="checkout-plan-content">
                                                 <ul>
                                                     <li><i class="fas fa-check"></i>{{t "Full access to all private posts"}}</li>
@@ -38,7 +38,7 @@
                                     <div class="col-md-4 mr-auto">
                                         <div class="checkout-plan">
                                             <h3>Yearly</h3>
-                                            <div class="pricing"><span>$</span><strong>{{@price.yearly}}</strong> / {{t "year"}}</div>
+                                            <div class="pricing"><span>$</span><strong>{{price yearly_price currency=currency}}</strong> / {{t "year"}}</div>
                                             <div class="checkout-plan-content">
                                                 <ul>
                                                     <li><i class="fas fa-check"></i>{{t "Full access to all private posts"}}</li>
